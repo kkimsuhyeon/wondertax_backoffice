@@ -12,9 +12,9 @@ function Root() {
     <BrowserRouter basename='/'>
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route exact path='/user' component={UserRouter} />
-        <Route exact path='/service' component={ServiceRouter} />
-        <Route exact path='/question' component={QuestionRouter} />
+        <Route path='/user' component={UserRouter} />
+        <Route path='/service' component={ServiceRouter} />
+        <Route path='/question' component={QuestionRouter} />
         <Redirect to='/' />
       </Switch>
     </BrowserRouter>
