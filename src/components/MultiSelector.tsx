@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
+import styled, { css } from 'styled-components';
 
 export interface PropTypes {
   books: Array<{ name: string; value: number }>;
-  chapters: Array<{ name: string; value: number; book: string }>;
+  chapters: Array<{ name: string; value: number; book: string}>;
   topics: Array<{ name: string; value: number; chapter: string }>;
   details: Array<{ name: string; value: number; topic: string }>;
   titles: Array<string>;
