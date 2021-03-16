@@ -1,10 +1,16 @@
 import React from 'react';
 
+import ResetStyle from 'globals/ResetStyle';
 
 import Root from './pages/Root';
 
 function App() {
-  return <Root />;
+  return (
+    <>
+      <ResetStyle />
+      <Root />
+    </>
+  );
 }
 
 export default App;

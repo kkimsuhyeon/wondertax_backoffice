@@ -1,9 +1,13 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 import instance from 'libs/api';
 
 import useInput from 'hooks/useInput';
+
+import TitleForm from 'components/question/TitleForm';
+import ExampleForm from 'components/question/ExampleForm';
+import CommentForm from 'components/question/CommentForm';
 
 // type은 뭘까?
 // createdOn은 생성날짜인데 내가 직접 적어주는건 아니겠지?
@@ -72,24 +76,18 @@ function Regist() {
 
   return (
     <Wrapper>
-      <Flex>
-        <div>
-          <Text>타입</Text>
-          <input value={type} onChange={handleType} />
-        </div>
-        <div>
-          <Text>난이도</Text>
-          <input value={difficult} onChange={handleDifficult} />
-        </div>
-        <div>
-          <Text>문제</Text>
-          <input value={question} onChange={handleQuestion} />
-        </div>
-      </Flex>
-
-      <Text>답변</Text>
-      <input value={answerNumber} onChange={handleAnswerNumber} />
-
+      <Text>문제 작성</Text>
+      <article>
+        <TitleForm />
+      </article>
+      <Text>보기 작성</Text>
+      <article>
+        <ExampleForm />
+      </article>
+      <Text>해설 작성</Text>
+      <article>
+        <CommentForm />
+      </article>
       <button onClick={handleSubmit}>제출</button>
     </Wrapper>
   );
@@ -99,10 +97,13 @@ export default Regist;
 
 const Wrapper = styled.div`
   max-width: 90rem;
+  margin: 0 auto;
+
+  & > article {
+    margin-bottom: 1rem;
+  }
 `;
 
-const Text = styled.div``;
-
-const Flex = styled.div`
-  display: flex;
+const Text = styled.div`
+  margin-bottom: 0.5rem;
 `;
