@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
 import instance from 'libs/api';
 
 import useInput from 'hooks/useInput';
 
-import TitleForm from 'components/question/TitleForm';
+import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/question/TitleForm';
 import ExampleForm from 'components/question/ExampleForm';
 import CommentForm from 'components/question/CommentForm';
 
@@ -52,33 +52,19 @@ const requestSubmit = async ({
 };
 
 function Regist() {
-  const [type, handleType] = useInput({
-    initialValue: '',
-    preParse: (value) => {
-      if (Number.isFinite(+value)) return value.trim();
-    },
-  });
-  const [difficult, handleDifficult] = useInput({ initialValue: '' });
-  const [question, handleQuestion] = useInput({ initialValue: '' });
-  const [answerNumber, handleAnswerNumber] = useInput({ initialValue: '' });
+  const [titleValue, setTitleValue] = useState({ title: '', difficult: '', answer: '' });
 
-  const handleSubmit = useCallback(async () => {
-    await requestSubmit({
-      type: type,
-      answerIdx: 1,
-      difficulty: 1,
-      question: question,
-      choices: ['문제1', '문제2', '문제3', '문제4'],
-      suffle: false,
-      unit: [1, 1, 1, 1],
+  const handleTitleChanges = (partial: Partial<TitleFormPropTypes['values']>) => {
+    setTitleValue((prev) => {
+      return { ...prev, ...partial };
     });
-  }, [type, question]);
+  };
 
   return (
     <Wrapper>
       <Text>문제 작성</Text>
       <article>
-        <TitleForm />
+        <TitleForm values={titleValue} onChanges={handleTitleChanges} />
       </article>
       <Text>보기 작성</Text>
       <article>
@@ -88,7 +74,7 @@ function Regist() {
       <article>
         <CommentForm />
       </article>
-      <button onClick={handleSubmit}>제출</button>
+      <button onClick={() => {}}>제출</button>
     </Wrapper>
   );
 }
