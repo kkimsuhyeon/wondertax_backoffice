@@ -1,14 +1,31 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-export const BASE_URL = 'https://wondertax.du.r.appspot.com';
+export const BASE_URL = 'https://wondertax.du.r.appspot.com/api';
 
 const instance = axios.create({
   baseURL: BASE_URL,
 });
 
 instance.interceptors.response.use(
-  (response) => response,
-  (err) => err
+  (response) => {
+    console.log(response);
+    return response;
+  },
+  (err) => {
+    console.log(err);
+    return err;
+  }
+);
+
+instance.interceptors.request.use(
+  (request) => {
+    console.log(request);
+    return request;
+  },
+  (err) => {
+    console.log(err);
+    return err;
+  }
 );
 
 export interface CreateRequestArguments {

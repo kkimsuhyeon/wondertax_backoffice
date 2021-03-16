@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import styled from '@emotion/styled';
-// import { css } from '@emotion/react';
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
 
 import instance from 'libs/api';
+
+import useInput from 'hooks/useInput';
 
 // type은 뭘까?
 // createdOn은 생성날짜인데 내가 직접 적어주는건 아니겠지?
@@ -32,7 +33,7 @@ const requestSubmit = async ({
   suffle?: boolean;
 }) => {
   await instance({
-    url: '/api/problem',
+    url: '/problem',
     method: 'POST',
     data: {
       type: type,
@@ -47,52 +48,47 @@ const requestSubmit = async ({
 };
 
 function Regist() {
-  const [type, setType] = useState<string>();
-  const [difficult, setDifficult] = useState<number>();
-  const [question, setQuestion] = useState<string>();
-  const [answerNumber, setAnswerNumber] = useState<number>();
-
-  const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setType(e.target.value);
-  }, []);
-
-  const handleQuestionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion(e.target.value);
-  }, []);
-
-  const handleDifficultChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setDifficult(Number(e.target.value));
-  }, []);
-
-  const handleAnswerChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAnswerNumber(Number(e.target.value));
-  }, []);
+  const [type, handleType] = useInput({
+    initialValue: '',
+    preParse: (value) => {
+      if (Number.isFinite(+value)) return value.trim();
+    },
+  });
+  const [difficult, handleDifficult] = useInput({ initialValue: '' });
+  const [question, handleQuestion] = useInput({ initialValue: '' });
+  const [answerNumber, handleAnswerNumber] = useInput({ initialValue: '' });
 
   const handleSubmit = useCallback(async () => {
     await requestSubmit({
       type: type,
-      answerIdx: answerNumber,
-      difficulty: difficult,
+      answerIdx: 1,
+      difficulty: 1,
       question: question,
       choices: ['문제1', '문제2', '문제3', '문제4'],
       suffle: false,
       unit: [1, 1, 1, 1],
     });
-  }, [type, answerNumber, difficult, question]);
+  }, [type, question]);
 
   return (
     <Wrapper>
-      <div>타입</div>
-      <input value={type} onChange={handleTypeChange} />
+      <Flex>
+        <div>
+          <Text>타입</Text>
+          <input value={type} onChange={handleType} />
+        </div>
+        <div>
+          <Text>난이도</Text>
+          <input value={difficult} onChange={handleDifficult} />
+        </div>
+        <div>
+          <Text>문제</Text>
+          <input value={question} onChange={handleQuestion} />
+        </div>
+      </Flex>
 
-      <div>난이도</div>
-      <input value={difficult} onChange={handleDifficultChange} />
-
-      <div>문제</div>
-      <input value={question} onChange={handleQuestionChange} />
-
-      <div>답변</div>
-      <input value={answerNumber} onChange={handleAnswerChange} />
+      <Text>답변</Text>
+      <input value={answerNumber} onChange={handleAnswerNumber} />
 
       <button onClick={handleSubmit}>제출</button>
     </Wrapper>
@@ -103,4 +99,10 @@ export default Regist;
 
 const Wrapper = styled.div`
   max-width: 90rem;
+`;
+
+const Text = styled.div``;
+
+const Flex = styled.div`
+  display: flex;
 `;
