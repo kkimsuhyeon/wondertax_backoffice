@@ -6,11 +6,18 @@
   },
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "react-hooks/exhaustive-deps": "warn",
     "eqeqeq": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src"]
+      }
+    }
   }
 }

@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-function ExampleForm() {
+export interface PropTypes {
+  value: Array<string>;
+  onChanges: ({ index, value }: { index: number; value: string }) => void;
+}
+
+function ExampleForm({ onChanges, value }: PropTypes) {
+  const handleChanges = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value, name } = e.target;
+      onChanges({ index: +name, value: value });
+    },
+    [onChanges]
+  );
+
   return (
     <Wrapper>
       <div>
         <div>1. </div>
-        <Input />
+        <Input name='0' value={value[0]} onChange={handleChanges} />
       </div>
       <div>
         <div>2. </div>
-        <Input />
+        <Input name='1' value={value[1]} onChange={handleChanges} />
       </div>
       <div>
         <div>3. </div>
-        <Input />
+        <Input name='2' value={value[2]} onChange={handleChanges} />
       </div>
       <div>
         <div>4.</div>
-        <Input />
+        <Input name='3' value={value[3]} onChange={handleChanges} />
       </div>
     </Wrapper>
   );

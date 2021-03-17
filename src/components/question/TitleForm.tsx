@@ -20,14 +20,14 @@ function TitleForm({ onChanges, values }: PropTypes) {
   };
 
   const handleDifficultChanges = useCallback<DropBoxPropTypes['onChange']>(
-    ({ name, value }) => {
+    ({ value }) => {
       onChanges({ difficult: value });
     },
     [onChanges]
   );
 
   const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
-    ({ value, name }) => {
+    ({ value }) => {
       onChanges({ answer: value });
     },
     [onChanges]
@@ -43,11 +43,32 @@ function TitleForm({ onChanges, values }: PropTypes) {
       </Div>
       <Div flex='1'>
         <Text>난이도</Text>
-        <DropBox value={difficult} height='2.5rem' list={[{ name: 'test', value: '0' }]} onChange={handleDifficultChanges} count='3' />
+        <DropBox
+          value={difficult}
+          height='2.5rem'
+          list={[
+            { name: '상', value: '0' },
+            { name: '중', value: '1' },
+            { name: '하', value: '2' },
+          ]}
+          onChange={handleDifficultChanges}
+          count='3'
+        />
       </Div>
       <Div flex='1'>
         <Text>답</Text>
-        <DropBox value={answer} height='2.5rem' list={[{ name: 'test', value: '0' }]} onChange={handleAnswerChanges} count='4' />
+        <DropBox
+          value={answer}
+          height='2.5rem'
+          list={[
+            { name: '1번', value: '1' },
+            { name: '2번', value: '2' },
+            { name: '3번', value: '3' },
+            { name: '4번', value: '4' },
+          ]}
+          onChange={handleAnswerChanges}
+          count='4'
+        />
       </Div>
     </Wrapper>
   );
@@ -67,6 +88,10 @@ const Div = styled.div<{ flex?: CSSProperties['flex'] }>`
   ${({ flex }) => flex && `flex: ${flex}`};
   width: 100%;
   margin-right: 2rem;
+
+  &:last-child {
+    margin-right: initial;
+  }
 `;
 
 const Input = styled.input`

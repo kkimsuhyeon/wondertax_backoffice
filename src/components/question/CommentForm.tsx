@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function CommentForm() {
-  return <StyleTextarea />;
+export interface PropTypes {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+function CommentForm({ onChange, value }: PropTypes) {
+  return <StyleTextarea value={value} onChange={onChange} />;
 }
 
 export default CommentForm;
