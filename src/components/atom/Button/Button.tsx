@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-import { StyleAttributes, PropTypes } from '.';
+import { StyleAttributes, PropTypes as ButtonPropTypes } from '.';
 
-export const Button = ({ children, customStyle = defaultStyle, onClick }: PropTypes) => {
+const Button = ({ customStyle = defaultStyle, children, onClick, status }: PropsWithChildren<ButtonPropTypes>) => {
   return (
-    <StyledButton height={customStyle?.height} width={customStyle?.width} onClick={onClick}>
+    <StyledButton height={customStyle?.height} width={customStyle?.width} onClick={onClick} status={status}>
       {children}
     </StyledButton>
   );
@@ -16,8 +16,12 @@ const defaultStyle: StyleAttributes = {
   width: 'auto',
 };
 
-const StyledButton = styled.button<StyleAttributes>`
+const StyledButton = styled.button.attrs<{ status: boolean }>(({ status }) => ({ disabled: status }))<StyleAttributes>`
   display: flex;
   ${({ height }) => height ?? `height: ${height}`};
   ${({ width }) => width ?? `width: ${width}`};
+  ${({ margin }) => margin ?? `margin: ${margin}`};
+  ${({ padding }) => padding ?? `padding: ${padding}`};
 `;
+
+export default Button;

@@ -1,6 +1,6 @@
 import instance from './instance';
 
-export const requestBasicRegist = async ({
+export const requestProblemRegist = async ({
   difficulty,
   question,
   choices,

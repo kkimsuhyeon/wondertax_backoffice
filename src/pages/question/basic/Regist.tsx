@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
-import { requestBasicRegist } from 'apis/question';
+import { requestProblemRegist } from 'apis/question';
 
 import useInput from 'hooks/useInput';
 
+import { Button } from 'components/atom';
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/question/TitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/question/ExampleForm';
 import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';
@@ -28,7 +29,6 @@ function Regist() {
     setExample((prev) => {
       const temp = [...prev];
       temp[index] = value;
-
       return [...temp];
     });
   }, []);
@@ -44,7 +44,7 @@ function Regist() {
 
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValue;
-    await requestBasicRegist({
+    await requestProblemRegist({
       answerIdx: +answer,
       difficulty: +difficult,
       choices: example,
@@ -80,6 +80,7 @@ function Regist() {
       <SubmitWrapper>
         <button onClick={handleSubmit}>제출</button>
       </SubmitWrapper>
+      <Button status={true}>test</Button>
     </Wrapper>
   );
 }

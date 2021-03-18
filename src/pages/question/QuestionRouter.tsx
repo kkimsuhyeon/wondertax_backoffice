@@ -5,9 +5,9 @@ import BasicList from './basic/List';
 import BasicDetail from './basic/Detail';
 import BlankList from './blank/List';
 import OXList from './OX/List';
-import BasicRegist from './basic/Regist';
+// import BasicRegist from './basic/Regist';
 
-// const BasicRegist = React.lazy(() => import('./basic/Regist'));
+const BasicRegist = React.lazy(() => import('./basic/Regist'));
 
 function QuestionRouter() {
   return (
