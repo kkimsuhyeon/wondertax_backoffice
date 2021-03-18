@@ -7,12 +7,15 @@ import useInput from 'hooks/useInput';
 
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/question/TitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/question/ExampleForm';
+import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';
 import CommentForm from 'components/question/CommentForm';
 
 function Regist() {
   const [titleValue, setTitleValue] = useState<TitleFormPropTypes['values']>({ title: '', difficult: '', answer: '' });
   const [example, setExample] = useState<ExampleFormPropTypes['value']>(['', '', '', '']);
   const [comment, handleComment] = useInput({ initialValue: '' });
+  const [chapterValue, setChapterValue] = useState<Array<string>>();
+
   const [suffle, setSuffle] = useState(false);
 
   const handleTitleChanges = useCallback((partial: Partial<TitleFormPropTypes['values']>) => {
@@ -30,6 +33,10 @@ function Regist() {
     });
   }, []);
 
+  const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
+    setChapterValue(value);
+  }, []);
+
   const handleSuffleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setSuffle(checked);
@@ -44,11 +51,16 @@ function Regist() {
       question: title,
       suffle: suffle,
       type: 'basic',
+      unit: chapterValue as Array<string>,
     });
-  }, [titleValue, example, suffle]);
+  }, [titleValue, example, suffle, chapterValue]);
 
   return (
     <Wrapper>
+      <Text>주제 작성</Text>
+      <article>
+        <ChapterForm onChange={handleChapterChange} />
+      </article>
       <Text>문제 작성</Text>
       <article>
         <TitleForm values={titleValue} onChanges={handleTitleChanges} />

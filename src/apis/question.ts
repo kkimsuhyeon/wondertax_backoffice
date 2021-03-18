@@ -7,6 +7,7 @@ export const requestBasicRegist = async ({
   answerIdx,
   suffle,
   type,
+  unit,
 }: {
   question: string;
   difficulty: number;
@@ -14,6 +15,7 @@ export const requestBasicRegist = async ({
   choices: Array<string>;
   suffle: boolean;
   type: string;
+  unit: Array<string>;
 }) => {
   await instance({
     url: '/problem',
@@ -24,7 +26,7 @@ export const requestBasicRegist = async ({
       choices: choices,
       question: question,
       type: type,
-      unit: ['1', '1', '1', '1'],
+      unit: unit,
       suffle: suffle,
     },
   });

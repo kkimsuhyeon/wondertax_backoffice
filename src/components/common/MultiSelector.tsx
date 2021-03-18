@@ -2,36 +2,39 @@ import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 export interface PropTypes {
-  books: Array<{ name: string; value: number }>;
-  chapters: Array<{ name: string; value: number; book: string}>;
-  topics: Array<{ name: string; value: number; chapter: string }>;
-  details: Array<{ name: string; value: number; topic: string }>;
+  books: Array<{ name: string; value: string }>;
+  chapters: Array<{ name: string; value: string; book: string }>;
+  topics: Array<{ name: string; value: string; chapter: string }>;
+  details: Array<{ name: string; value: string; topic: string }>;
   titles: Array<string>;
-  onChange: (value: Array<number>) => void;
+  onChange: (value: Array<string>) => void;
 }
 
 function MultiSelector({ books, chapters, topics, details, titles, onChange }: PropTypes) {
-  const [book, setBook] = useState<{ name: string; value: number }>();
-  const [chapter, setChapter] = useState<{ name: string; value: number }>();
-  const [topic, setTopic] = useState<{ name: string; value: number }>();
-  const [detail, setDetail] = useState<{ name: string; value: number }>();
+  const [book, setBook] = useState<{ name: string; value: string }>();
+  const [chapter, setChapter] = useState<{ name: string; value: string }>();
+  const [topic, setTopic] = useState<{ name: string; value: string }>();
+  const [detail, setDetail] = useState<{ name: string; value: string }>();
 
-  const handleBookChange = useCallback((value: { name: string; value: number }) => {
+  const handleBookChange = useCallback((value: { name: string; value: string }) => {
     setBook(value);
+    setChapter(undefined);
   }, []);
 
-  const handleChapterChange = useCallback((value: { name: string; value: number }) => {
+  const handleChapterChange = useCallback((value: { name: string; value: string }) => {
     setChapter(value);
+    setTopic(undefined);
   }, []);
 
-  const handleTopicChange = useCallback((value: { name: string; value: number }) => {
+  const handleTopicChange = useCallback((value: { name: string; value: string }) => {
     setTopic(value);
+    setDetail(undefined);
   }, []);
 
   const handleDetailChange = useCallback(
-    (value: { name: string; value: number }) => {
+    (value: { name: string; value: string }) => {
       setDetail(value);
-      onChange([book?.value as number, chapter?.value as number, topic?.value as number, value.value]);
+      onChange([book?.value as string, chapter?.value as string, topic?.value as string, value.value]);
     },
     [book, chapter, topic, onChange]
   );
