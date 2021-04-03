@@ -50,7 +50,7 @@ function Regist() {
       choices: example,
       question: title,
       suffle: suffle,
-      type: 'basic',
+      type: 'A',
       unit: chapterValue as Array<string>,
     });
   }, [titleValue, example, suffle, chapterValue]);
