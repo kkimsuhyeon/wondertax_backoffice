@@ -14,7 +14,7 @@ import CommentForm from 'components/question/CommentForm';
 function Regist() {
   const [titleValue, setTitleValue] = useState<TitleFormPropTypes['values']>({ title: '', difficult: '', answer: '' });
   const [example, setExample] = useState<ExampleFormPropTypes['value']>(['', '', '', '']);
-  const [comment, handleComment] = useInput({ initialValue: '' });
+  const [comment, handleComment, setComnent] = useInput({ initialValue: '' });
   const [chapterValue, setChapterValue] = useState<Array<string>>();
   const [shuffle, setShuffle] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(false);
@@ -44,6 +44,7 @@ function Regist() {
 
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValue;
+
     try {
       setButtonStatus(true);
       await requestProblemRegist({
@@ -57,13 +58,18 @@ function Regist() {
         comment: comment,
         authorId: 1,
       });
+      setTitleValue({ title: '', difficult: '', answer: '' });
+      setExample(['', '', '', '']);
+      setChapterValue(undefined);
+      setShuffle(false);
+      setComnent('');
     } catch (e) {
       console.log(e);
       throw e;
-    } finally{
+    } finally {
       setButtonStatus(false);
     }
-  }, [titleValue, example, shuffle, chapterValue, comment]);
+  }, [titleValue, example, shuffle, chapterValue, comment, setComnent]);
 
   return (
     <Wrapper>
@@ -88,7 +94,9 @@ function Regist() {
         <Label htmlFor='suffle'>셔플 여부</Label>
       </SuffleWrapper>
       <SubmitWrapper>
-        <button disabled={buttonStatus} onClick={handleSubmit}>제출</button>
+        <button disabled={buttonStatus} onClick={handleSubmit}>
+          제출
+        </button>
       </SubmitWrapper>
     </Wrapper>
   );

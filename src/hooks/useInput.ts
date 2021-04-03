@@ -16,7 +16,7 @@ function useInput({ initialValue, preParse }: PropTypes) {
     [preParse]
   );
 
-  return [value, handleValue] as const;
+  return [value, handleValue, setValue] as const;
 }
 
 export default useInput;
