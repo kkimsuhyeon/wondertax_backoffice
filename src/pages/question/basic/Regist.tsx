@@ -16,8 +16,8 @@ function Regist() {
   const [example, setExample] = useState<ExampleFormPropTypes['value']>(['', '', '', '']);
   const [comment, handleComment] = useInput({ initialValue: '' });
   const [chapterValue, setChapterValue] = useState<Array<string>>();
-
   const [shuffle, setShuffle] = useState(false);
+  const [buttonStatus, setButtonStatus] = useState(false);
 
   const handleTitleChanges = useCallback((partial: Partial<TitleFormPropTypes['values']>) => {
     setTitleValue((prev) => {
@@ -44,18 +44,25 @@ function Regist() {
 
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValue;
-    console.log(shuffle);
-    await requestProblemRegist({
-      answerIdx: +answer,
-      difficulty: difficult,
-      choices: example,
-      question: title,
-      shuffle: shuffle,
-      type: 'A',
-      unit: chapterValue as Array<string>,
-      comment: comment,
-      authorId: 1,
-    });
+    try {
+      setButtonStatus(true);
+      await requestProblemRegist({
+        answerIdx: +answer,
+        difficulty: difficult,
+        choices: example,
+        question: title,
+        shuffle: shuffle,
+        type: 'A',
+        unit: chapterValue as Array<string>,
+        comment: comment,
+        authorId: 1,
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    } finally{
+      setButtonStatus(false);
+    }
   }, [titleValue, example, shuffle, chapterValue, comment]);
 
   return (
@@ -81,9 +88,8 @@ function Regist() {
         <Label htmlFor='suffle'>셔플 여부</Label>
       </SuffleWrapper>
       <SubmitWrapper>
-        <button onClick={handleSubmit}>제출</button>
+        <button disabled={buttonStatus} onClick={handleSubmit}>제출</button>
       </SubmitWrapper>
-      <Button status={true}>test</Button>
     </Wrapper>
   );
 }
