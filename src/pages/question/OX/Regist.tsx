@@ -49,3 +49,5 @@ const Wrapper = styled.div`
 const Text = styled.div`
   margin-bottom: 0.5rem;
 `;
+
+// answerIdx 0 , 1로 들어감
