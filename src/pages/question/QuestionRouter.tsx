@@ -3,9 +3,12 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import BasicList from './basic/List';
 import BasicDetail from './basic/Detail';
-import BlankList from './blank/List';
-import OXList from './OX/List';
 import BasicRegist from './basic/Regist';
+
+import BlankList from './blank/List';
+
+import OXList from './OX/List';
+import OXRegist from './OX/Regist';
 
 // const BasicRegist = React.lazy(() => import('./basic/Regist'));
 
@@ -19,6 +22,7 @@ function QuestionRouter() {
           <Route exact path='/basic/:basicId' component={BasicDetail} />
           <Route exact path='/blank' component={BlankList} />
           <Route exact path='/ox' component={OXList} />
+          <Route exact path='/ox/regist' component={OXRegist} />
           <Redirect to='/basic' />
         </Switch>
       </Suspense>
