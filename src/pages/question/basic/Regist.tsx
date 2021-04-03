@@ -17,7 +17,7 @@ function Regist() {
   const [comment, handleComment] = useInput({ initialValue: '' });
   const [chapterValue, setChapterValue] = useState<Array<string>>();
 
-  const [suffle, setSuffle] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
 
   const handleTitleChanges = useCallback((partial: Partial<TitleFormPropTypes['values']>) => {
     setTitleValue((prev) => {
@@ -39,21 +39,24 @@ function Regist() {
 
   const handleSuffleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
-    setSuffle(checked);
+    setShuffle(checked);
   }, []);
 
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValue;
+    console.log(shuffle);
     await requestProblemRegist({
       answerIdx: +answer,
-      difficulty: +difficult,
+      difficulty: difficult,
       choices: example,
       question: title,
-      suffle: suffle,
+      shuffle: shuffle,
       type: 'A',
       unit: chapterValue as Array<string>,
+      comment: comment,
+      authorId: 1,
     });
-  }, [titleValue, example, suffle, chapterValue]);
+  }, [titleValue, example, shuffle, chapterValue, comment]);
 
   return (
     <Wrapper>
@@ -74,7 +77,7 @@ function Regist() {
         <CommentForm value={comment} onChange={handleComment} />
       </article>
       <SuffleWrapper>
-        <input type='checkbox' id='suffle' checked={suffle} onChange={handleSuffleChange} />
+        <input type='checkbox' id='suffle' checked={shuffle} onChange={handleSuffleChange} />
         <Label htmlFor='suffle'>셔플 여부</Label>
       </SuffleWrapper>
       <SubmitWrapper>

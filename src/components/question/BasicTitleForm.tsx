@@ -47,9 +47,9 @@ function TitleForm({ onChanges, values }: PropTypes) {
           value={difficult}
           height='2.5rem'
           list={[
-            { name: '상', value: '0' },
-            { name: '중', value: '1' },
-            { name: '하', value: '2' },
+            { name: '상', value: 'advanced' },
+            { name: '중', value: 'intermediate' },
+            { name: '하', value: 'basic' },
           ]}
           onChange={handleDifficultChanges}
           count='3'
@@ -61,10 +61,10 @@ function TitleForm({ onChanges, values }: PropTypes) {
           value={answer}
           height='2.5rem'
           list={[
-            { name: '1번', value: '1' },
-            { name: '2번', value: '2' },
-            { name: '3번', value: '3' },
-            { name: '4번', value: '4' },
+            { name: '1번', value: '0' },
+            { name: '2번', value: '1' },
+            { name: '3번', value: '2' },
+            { name: '4번', value: '3' },
           ]}
           onChange={handleAnswerChanges}
           count='4'

@@ -18,17 +18,21 @@ export const requestProblemRegist = async ({
   question,
   choices,
   answerIdx,
-  suffle,
+  shuffle,
   type,
   unit,
+  comment,
+  authorId,
 }: {
   question: string;
-  difficulty: number;
+  difficulty: string;
   answerIdx: number;
   choices: Array<string>;
-  suffle: boolean;
+  shuffle: boolean;
   type: string;
   unit: Array<string>;
+  comment: string;
+  authorId: number;
 }) => {
   await instance({
     url: '/problem',
@@ -40,7 +44,9 @@ export const requestProblemRegist = async ({
       question: question,
       type: type,
       unit: unit,
-      suffle: suffle,
+      shuffle: shuffle,
+      commentary: comment,
+      authorId: 1
     },
   });
 };
