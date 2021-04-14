@@ -5,7 +5,7 @@ import { requestProblemRegist } from 'apis/question';
 
 import useInput from 'hooks/useInput';
 
-import { Button } from 'components/atom';
+import { Button } from 'components/atom/Button';
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/question/BasicTitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/question/ExampleForm';
 import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';

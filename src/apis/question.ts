@@ -22,7 +22,7 @@ export const requestProblemRegist = async ({
   type,
   unit,
   comment,
-  authorId,
+  authorId = 1,
 }: {
   question: string;
   difficulty: string;
@@ -46,7 +46,7 @@ export const requestProblemRegist = async ({
       unit: unit,
       shuffle: shuffle,
       commentary: comment,
-      authorId: 1
+      authorId: authorId,
     },
   });
 };
