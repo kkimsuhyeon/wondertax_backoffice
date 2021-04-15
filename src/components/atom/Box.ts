@@ -10,6 +10,21 @@ interface Div {
   backgroundColor?: keyof Palette;
 }
 
+interface Flex {
+  align?: CSSProperties['alignItems'];
+  justify?: CSSProperties['justifyContent'];
+  direction?: CSSProperties['flexDirection'];
+  wrap?: CSSProperties['flexWrap'];
+}
+
+interface Text {
+  size?: CSSProperties['fontSize'];
+  bold?: boolean;
+  color?: CSSProperties['color'];
+  align?: CSSProperties['textAlign'];
+  margin?: CSSProperties['margin'];
+}
+
 export const Div = styled.div<Div>`
   ${({ theme, width, height, flex, margin, padding, backgroundColor }) => css`
     ${width && `width: ${width};`}
@@ -18,5 +33,25 @@ export const Div = styled.div<Div>`
     ${margin && `margin: ${margin};`}
     ${padding && `padding: ${padding};`}
     ${backgroundColor && `background: ${theme[backgroundColor]};`}
+  `}
+`;
+
+export const Flex = styled(Div)<Flex>`
+  ${({ align, justify, direction, wrap }) => css`
+    display: flex;
+    ${align && `align-items: ${align};`}
+    ${justify && `justify-content: ${justify};`}
+    ${direction && `flex-direction: ${direction};`}
+    ${wrap && `flex-wrap: ${wrap};`}
+  `}
+`;
+
+export const Text = styled.div<Text>`
+  ${({ align, color, bold, size, margin }) => css`
+    font-weight: ${bold ? '700' : '500'};
+    ${size && `font-size: ${size}`};
+    ${margin && `margin: ${margin};`}
+    ${color && `color: ${color};`}
+    ${align && `text-align: ${align};`}
   `}
 `;

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
-import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
+// import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
 
 interface Values {
   title?: string;
@@ -21,12 +21,12 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
     [onChanges]
   );
 
-  const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
-    ({ value }) => {
-      onChanges({ answer: value });
-    },
-    [onChanges]
-  );
+  // const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
+  //   ({ value }) => {
+  //     onChanges({ answer: value });
+  //   },
+  //   [onChanges]
+  // );
 
   const { answer, title } = values;
 
@@ -38,7 +38,7 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
       </Div>
       <Div flex='1'>
         <Text>답</Text>
-        <DropBox value={answer} onChange={handleAnswerChanges} count='2' list={[]} height='2.5rem' />
+        {/* <DropBox value={answer} onChange={handleAnswerChanges} count='2' list={[]} height='2.5rem' /> */}
       </Div>
     </Wrapper>
   );

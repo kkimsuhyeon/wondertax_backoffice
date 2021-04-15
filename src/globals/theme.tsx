@@ -5,6 +5,8 @@ export const palette = {
   lemon: '#fffacd',
   black: '#000000',
   white: '#ffffff',
+  whiteGray: '#eee',
+  blackGray: '#555',
 };
 
 function StyledThemeProvider({ children }: { children: React.ReactNode }) {
