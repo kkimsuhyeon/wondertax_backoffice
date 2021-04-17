@@ -21,7 +21,6 @@ export interface PropTypes {
   placeHolder?: string;
   count?: number;
   list: Array<DataType>;
-  selected;
 }
 
 function DropBox({ disabled, height, placeHolder, list, count }: PropTypes) {
