@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
-// import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
-import DropBox from 'components/common/DropBox';
+import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
 
 interface Values {
   title: string;
@@ -20,19 +19,19 @@ function TitleForm({ onChanges, values }: PropTypes) {
     onChanges({ title: e.target.value });
   };
 
-  // const handleDifficultChanges = useCallback<DropBoxPropTypes['onChange']>(
-  //   ({ value }) => {
-  //     onChanges({ difficult: value });
-  //   },
-  //   [onChanges]
-  // );
+  const handleDifficultChanges = useCallback<DropBoxPropTypes['onChange']>(
+    ({ value }) => {
+      onChanges({ difficult: value });
+    },
+    [onChanges]
+  );
 
-  // const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
-  //   ({ value }) => {
-  //     onChanges({ answer: value });
-  //   },
-  //   [onChanges]
-  // );
+  const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
+    ({ value }) => {
+      onChanges({ answer: value });
+    },
+    [onChanges]
+  );
 
   const { answer, difficult, title } = values;
 
@@ -45,16 +44,6 @@ function TitleForm({ onChanges, values }: PropTypes) {
       <Div flex='1'>
         <Text>난이도</Text>
         <DropBox
-          placeHolder='test'
-          height='2rem'
-          count={3}
-          list={[
-            { name: '상', value: 'advanced' },
-            { name: '중', value: 'intermediate' },
-            { name: '하', value: 'basic' },
-          ]}
-        />
-        {/* <DropBox
           value={difficult}
           height='2.5rem'
           list={[
@@ -64,11 +53,11 @@ function TitleForm({ onChanges, values }: PropTypes) {
           ]}
           onChange={handleDifficultChanges}
           count='3'
-        /> */}
+        />
       </Div>
       <Div flex='1'>
         <Text>답</Text>
-        {/* <DropBox
+        <DropBox
           value={answer}
           height='2.5rem'
           list={[
@@ -79,7 +68,7 @@ function TitleForm({ onChanges, values }: PropTypes) {
           ]}
           onChange={handleAnswerChanges}
           count='4'
-        /> */}
+        />
       </Div>
     </Wrapper>
   );

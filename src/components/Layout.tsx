@@ -109,7 +109,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // handle selected
   const selected = location.pathname.split('/')[1];
-  console.log(selected);
 
   const handleDrawerOpen = () => {
     setOpen(true);

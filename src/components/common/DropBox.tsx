@@ -1,128 +1,140 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-
-interface Wrapper {
-  width?: string;
-  margin?: string;
-  disabled?: boolean;
-  selected?: string;
-  height?: string;
-  count?: number;
-}
 
 export interface DataType {
   name: string;
-  value: string | number;
+  value: string;
 }
 
-export interface PropTypes {
-  disabled?: boolean;
+interface WrapperProps {
+  width?: string;
   height?: string;
-  placeHolder?: string;
-  count?: number;
+  margin?: string;
+  disabled?: boolean;
+  selected?: string;
+}
+
+export interface PropTypes extends Omit<WrapperProps, 'selected'> {
+  onChange: (value: DataType) => void;
   list: Array<DataType>;
+  placeholder?: string;
+  value: string;
+  height?: string;
+  count?: string;
+  className?: string;
 }
 
-function DropBox({ disabled, height, placeHolder, list, count }: PropTypes) {
-  const [isOpen, setOpen] = useState(false);
-  const [{ name, value }, setData] = useState<DataType>({ name: '', value: '' });
-
-  const handleClose = useCallback(() => {
-    setOpen(false);
-  }, []);
-
-  const handleToggle = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, []);
-
-  const handleData = useCallback(({ name, value }: { name: string; value: string | number }) => {
-    setData({ name: name, value: value });
-  }, []);
-
-  const makeList = useMemo(() => {
-    return list.map((item) => (
-      <li key={item.value} data-value={item.value} onClick={() => handleData({ name: item.name, value: item.value })}>
-        {item.name}
-      </li>
-    ));
-  }, [list, handleData]);
-
-  useEffect(() => {
-    if (placeHolder) setData({ name: placeHolder, value: '' });
-  }, [placeHolder]);
-
-  return (
-    <Wrapper onClick={handleToggle} tabIndex={0} onBlur={handleClose} disabled={disabled} height={height}>
-      <Selector>{name}</Selector>
-      <List open={isOpen} count={count} value={value}>
-        {makeList}
-      </List>
-    </Wrapper>
-  );
-}
-
-export default DropBox;
-
-const Selector = styled.div<{ height?: string }>`
-  border: 1px solid black;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Wrapper = styled.div<WrapperProps>`
+  ${({ ...props }) =>
+    css`
+      user-select: none;
+      cursor: pointer;
+      position: relative;
+      width: ${props.width ?? `100%`};
+      ${props.margin && `margin: ${props.margin};`}
+      background-color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      & > div > div:first-child {
+        ${!props.selected && `color: #E1E1E1;`}
+      }
+      & li {
+        padding: 0 10px;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        cursor: pointer;
+        &[data-value='${props.selected}'] {
+          background-color: '#EF9CAC';
+        }
+        &:hover {
+          background-color: '#EF9CAC';
+        }
+      }
+      ${props.disabled &&
+      css`
+        cursor: not-allowed;
+        background-color: '#EF9CAC';
+      `}
+    `}
+  &:focus {
+    outline: none;
+  }
 `;
 
-const List = styled.ul<{ open?: boolean; count?: number; value?: string | number }>`
-  ${({ open, count = 4, value }) => css`
+const Selector = styled.div<{ height?: string }>`
+  ${({ height }) => css`
+    height: ${height ?? `52px`};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #16191d;
+    border-radius: 4px;
+    padding: 0px 17px;
+    @media screen and (max-width: 500px) {
+      font-size: 14px;
+      height: ${height ?? '46px'};
+    }
+  `}
+`;
+
+const List = styled.ul<{ open?: boolean; count?: string }>`
+  ${({ open, count = '4' }) => css`
     ${!open && `display: none;`}
-    overflow-y: overlay;
+    overflow-y: auto;
     position: absolute;
-    z-index: 1;
     width: 100%;
-    text-align: center;
-    border: 1px solid black;
+    border: 1px solid #16191d;
     border-top: 0;
-    height: ${count === 1 ? '2.55rem' : `${2.52 * count}rem`};
-
-    & > li {
-      height: 2.5rem;
-      line-height: 2.5rem;
-      cursor: pointer;
-
-      &[data-value='${value}'] {
-        background-color: wheat;
-      }
-
-      &:hover {
-        background-color: pink;
+    height: ${`${Number(count) * 2.5}rem`};
+    background-color: #fff;
+    &::-webkit-scrollbar {
+      width: 0.3rem;
+      background: rgba(0, 0, 0, 0.05);
+      &-thumb {
+        background-color: '#AAAAAA';
+        border-radius: 5px;
       }
     }
   `}
 `;
 
-const Wrapper = styled.div<Wrapper>`
-  ${({ width, margin, disabled, height, theme }) => {
-    if (disabled)
-      return css`
-        pointer-events: none;
-        background-color: ${theme.whiteGray};
-      `;
-    return css`
-      position: relative;
-      width: ${width ?? '100%'};
-      ${margin && `margin: ${margin};`}
-      background-color: white;
-      height: ${height ?? `2.5rem`};
-      &:focus {
-        outline: none;
-        text-decoration: none;
-      }
+function DropBox({ width, margin, height, onChange, disabled, list, placeholder, value, count }: PropTypes) {
+  const [isOpen, setOpen] = useState(false);
 
-      & > ${Selector} {
-      }
+  const toggleOpen = useCallback(() => {
+    if (!disabled) setOpen((prev) => !prev);
+  }, [disabled]);
 
-      & > ${List} {
-        top: ${height ?? `2.5rem`};
-      }
-    `;
-  }}
-`;
+  const handleClick = useCallback(
+    ({ name, value }: DataType) => {
+      onChange({ name, value });
+      setOpen(false);
+    },
+    [onChange]
+  );
+
+  const selectedName = useMemo(() => list.find((item) => item.value === value)?.name ?? placeholder, [list, value, placeholder]);
+
+  const makeList = useMemo(
+    () =>
+      list.map(({ name, value }) => (
+        <li key={value} data-value={value} onClick={() => handleClick({ name, value })}>
+          {name}
+        </li>
+      )),
+    [handleClick, list]
+  );
+  return (
+    <Wrapper width={width} margin={margin} disabled={disabled} selected={value} tabIndex={0} onBlur={() => setOpen(false)}>
+      <Selector height={height} onClick={toggleOpen}>
+        <div>{selectedName}</div>
+        <div style={{ fontSize: '0.5rem' }}>{isOpen ? '▲' : '▼'}</div>
+      </Selector>
+      <List open={isOpen} count={count}>
+        {makeList}
+      </List>
+    </Wrapper>
+  );
+}
+export default DropBox;
