@@ -1,26 +1,22 @@
-import React from "react";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import routePaths from "./RoutePaths";
-import Layout from "../components/Layout";
+// import routePaths from './RoutePaths';
+import Layout from 'components/Layout';
+// import BasicList from 'pages/problems/basic/List';
+import Problem from 'pages/problems';
+import Home from 'pages/Home';
 
 export default function Routes() {
   return (
     <BrowserRouter basename='/admin'>
       <Switch>
-        {routePaths.map((routeProperty) => {
-          return (
-            <Route
-              exact={routeProperty.exact}
-              path={routeProperty.path}
-              key={routeProperty.path}
-              render={(route) => (
-                <Layout Component={routeProperty.component} route={route} />
-              )}
-            />
-          );
-        })}
-        <Route component={() => <>404</>} />
+        <Layout>
+          <Route path='/problems' component={Problem} />
+          <Route exact path='/' component={Home} />
+          {/* <Route component={() => <>404</>} /> */}
+          {/* <Redirect /> */}
+        </Layout>
       </Switch>
     </BrowserRouter>
   );
