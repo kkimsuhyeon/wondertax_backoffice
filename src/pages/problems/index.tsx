@@ -12,9 +12,9 @@ import OXRegist from './OX/Regist';
 
 // const BasicRegist = React.lazy(() => import('./basic/Regist'));
 
-function QuestionRouter() {
+function Problems() {
   return (
-    <BrowserRouter basename='/question'>
+    <BrowserRouter basename='/admin/problems'>
       <Suspense fallback={<div>loading...</div>}>
         <Switch>
           <Route exact path='/basic' component={BasicList} />
@@ -30,4 +30,4 @@ function QuestionRouter() {
   );
 }
 
-export default QuestionRouter;
+export default Problems;

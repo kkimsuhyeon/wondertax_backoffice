@@ -1,20 +1,16 @@
-import React from 'react';
+import React  from 'react';
 
 import ResetStyle from 'globals/ResetStyle';
 import { ThemeProvider } from 'globals/theme';
+import Routes from "./routes";
 
-// import { Button } from 'components/atom/Button';
-
-import Root from './pages/Root';
-
-function App() {
+// from https://codesandbox.io/s/github/albertcito/templates-react/tree/master
+export default function App() {
   return (
     <ThemeProvider>
       <ResetStyle />
-      <Root />
+      <Routes />
       {/* <Button>test</Button> */}
     </ThemeProvider>
   );
 }
-
-export default App;
