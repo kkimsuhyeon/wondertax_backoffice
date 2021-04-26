@@ -20,34 +20,26 @@ function Regist() {
     });
   }, []);
 
-  const handleSubmit = useCallback(async () => {
-    const { answer, difficult, title } = titleValue;
+  // const handleSubmit = useCallback(async () => {
+  //   const { answer, difficult, title } = titleValue;
 
-    try {
-      setButtonStatus(true);
-      await requestProblemRegist({
-        answerIdx: +answer,
-        difficulty: difficult,
-        choices: example,
-        question: title,
-        shuffle: shuffle,
-        type: 'A',
-        unit: chapterValue as Array<string>,
-        comment: comment,
-        authorId: 1,
-      });
-      setTitleValue({ title: '', difficult: '', answer: '' });
-      setExample(['', '', '', '']);
-      setChapterValue(undefined);
-      setShuffle(false);
-      setComnent('');
-    } catch (e) {
-      console.log(e);
-      throw e;
-    } finally {
-      setButtonStatus(false);
-    }
-  }, [titleValue, example, shuffle, chapterValue, comment, setComnent]);
+  //   try {
+  //     setButtonStatus(true);
+  //     await requestProblemRegist({
+  //       difficulty: difficult,
+  //       question: title,
+  //       unit: chapterValue as Array<string>,
+  //       authorId: 1,
+  //     });
+  //     setTitleValue({ title: '', difficult: '', answer: '' });
+  //     setChapterValue(undefined);
+  //   } catch (e) {
+  //     console.log(e);
+  //     throw e;
+  //   } finally {
+  //     setButtonStatus(false);
+  //   }
+  // }, [titleValue, chapterValue]);
 
   return (
     <Wrapper>
@@ -65,15 +57,15 @@ function Regist() {
           <GoPencil />
           문제 작성
         </SubjectText>
-        <article>
+        {/* <article>
           <OXTitleForm values={titleValue} onChanges={handleTitleChanges} />
-        </article>
+        </article> */}
       </Section>
-      <SubmitWrapper>
+      {/* <SubmitWrapper>
         <button disabled={buttonStatus} onClick={handleSubmit}>
           제출
         </button>
-      </SubmitWrapper>
+      </SubmitWrapper> */}
     </Wrapper>
   );
 }
