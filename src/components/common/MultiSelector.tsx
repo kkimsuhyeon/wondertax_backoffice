@@ -101,6 +101,7 @@ const TitleWrapper = styled.div`
   margin-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: bold;
+  text-align: center;
 `;
 
 const SelectWrapper = styled.div`
@@ -112,6 +113,8 @@ const Section = styled.section`
   height: 10rem;
   overflow: auto;
   margin-right: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
 
   &::-webkit-scrollbar {
     width: 5px;

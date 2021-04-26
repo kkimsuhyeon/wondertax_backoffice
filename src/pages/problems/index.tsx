@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import BasicList from './basic/List';
 import BasicDetail from './basic/Detail';

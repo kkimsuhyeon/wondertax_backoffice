@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { CSSProperties } from 'styled-components';
-
-// import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
+import DropBox, { PropTypes as DropBoxPropTypes } from 'components/common/DropBox';
 
 interface Values {
-  title?: string;
+  title: string;
+  difficult: string;
   answer: string;
 }
 
@@ -14,6 +14,7 @@ export interface PropTypes {
 }
 
 function OXTitleForm({ values, onChanges }: PropTypes) {
+  const [oxChecked, setOxChecked] = useState('O');
   const handleInputChanges = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChanges({ title: e.target.value });
@@ -21,14 +22,18 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
     [onChanges]
   );
 
-  // const handleAnswerChanges = useCallback<DropBoxPropTypes['onChange']>(
-  //   ({ value }) => {
-  //     onChanges({ answer: value });
-  //   },
-  //   [onChanges]
-  // );
+  const handleOXCheckedChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOxChecked(e.target.value);
+  }, []);
 
-  const { answer, title } = values;
+  const handleDifficultChanges = useCallback<DropBoxPropTypes['onChange']>(
+    ({ value }) => {
+      onChanges({ difficult: value });
+    },
+    [onChanges]
+  );
+
+  const { answer, difficult, title } = values;
 
   return (
     <Wrapper>
@@ -37,8 +42,46 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
         <Input value={title} onChange={handleInputChanges} />
       </Div>
       <Div flex='1'>
+        <Text>난이도</Text>
+        <DropBox
+          value={difficult}
+          height='2.5rem'
+          list={[
+            { name: '상', value: 'advanced' },
+            { name: '중', value: 'intermediate' },
+            { name: '하', value: 'basic' },
+          ]}
+          onChange={handleDifficultChanges}
+          count='3'
+        />
+      </Div>
+      <Div flex='1'>
         <Text>답</Text>
-        {/* <DropBox value={answer} onChange={handleAnswerChanges} count='2' list={[]} height='2.5rem' /> */}
+        {/* <input type='checkbox' name='oxchecked' value='O' onChange={handleOXCheckedChange} />
+        <Label htmlFor='suffle'>O</Label>
+        <input type='checkbox' name='oxchecked' value='X' onChange={handleOXCheckedChange} />
+        <Label htmlFor='suffle'>X</Label> */}
+
+        <input
+          type='radio'
+          id='oxchecked'
+          name='oxchecked'
+          value='O'
+          checked={oxChecked === 'O' ? true : false}
+          onChange={handleOXCheckedChange}
+        >
+          O
+        </input>
+        <input
+          type='radio'
+          id='oxchecked'
+          name='oxchecked'
+          value='X'
+          checked={oxChecked === 'X' ? true : false}
+          onChange={handleOXCheckedChange}
+        >
+          X
+        </input>
       </Div>
     </Wrapper>
   );
@@ -68,4 +111,8 @@ const Input = styled.input`
   border: 1px solid black;
   height: 2.5rem;
   width: 100%;
+`;
+
+const Label = styled.label`
+  user-select: none;
 `;
