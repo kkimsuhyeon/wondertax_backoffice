@@ -43,6 +43,7 @@ function Regist() {
 
   return (
     <Wrapper>
+      <PageTitle>ox문제등록</PageTitle>
       <Section>
         <SubjectText>
           <GoTag />
@@ -101,4 +102,11 @@ const SubmitWrapper = styled.article`
     height: 3rem;
     font-size: 1rem;
   }
+`;
+
+const PageTitle = styled.p`
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 2rem;
 `;
