@@ -7,7 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AddProblemIcon from '@material-ui/icons/Add';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 export interface PropTypes {
   isOpen: boolean;
@@ -16,13 +16,13 @@ export interface PropTypes {
 function SideNav({ isOpen }: PropTypes) {
   return (
     <Wrapper isOpen={isOpen}>
+      <Menu exact to='/'>
+        <DashboardIcon />
+        Dashboard
+      </Menu>
       <Menu to='/problems'>
         <MenuBookIcon />
         Problems
-      </Menu>
-      <Menu to='/registerpreview'>
-        <AddProblemIcon />
-        register
       </Menu>
       <Menu to='/user'>
         <PeopleIcon />
@@ -36,7 +36,7 @@ function SideNav({ isOpen }: PropTypes) {
         <SettingsIcon />
         Setting
       </Menu>
-      <Menu exact to='/'>
+      <Menu exact to='/logout'>
         <ExitToAppIcon />
         Logout
       </Menu>
