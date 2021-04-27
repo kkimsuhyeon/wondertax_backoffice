@@ -6,6 +6,7 @@ import Layout from 'components/Layout';
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';
 import RegisterPreview from 'pages/registerpreview/RegisterPreview';
+import LogIn from 'pages/login/Login';
 
 function Root() {
   return (
@@ -13,6 +14,7 @@ function Root() {
       <Layout>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route path='/login' component={LogIn} />
           <Route path='/problems' component={Problems} />
           <Route path='/registerpreview' component={RegisterPreview} />
           <Redirect path='*' to='/' />

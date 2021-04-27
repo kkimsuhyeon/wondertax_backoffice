@@ -57,30 +57,26 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
       </Div>
       <Div flex='1'>
         <Text>답</Text>
-        {/* <input type='checkbox' name='oxchecked' value='O' onChange={handleOXCheckedChange} />
-        <Label htmlFor='suffle'>O</Label>
-        <input type='checkbox' name='oxchecked' value='X' onChange={handleOXCheckedChange} />
-        <Label htmlFor='suffle'>X</Label> */}
 
         <RadioInput
           type='radio'
-          id='oxchecked'
+          id='ochecked'
           name='oxchecked'
           value='O'
           checked={oxChecked === 'O' ? true : false}
           onChange={handleOXCheckedChange}
         />
-        <Label htmlFor='suffle'>O</Label>
+        <Label htmlFor='ochecked'>O</Label>
 
         <RadioInput
           type='radio'
-          id='oxchecked'
+          id='xchecked'
           name='oxchecked'
           value='X'
           checked={oxChecked === 'X' ? true : false}
           onChange={handleOXCheckedChange}
         />
-        <Label htmlFor='suffle'>X</Label>
+        <Label htmlFor='xchecked'>X</Label>
       </Div>
     </Wrapper>
   );
