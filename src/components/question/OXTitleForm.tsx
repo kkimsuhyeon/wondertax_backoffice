@@ -62,26 +62,25 @@ function OXTitleForm({ values, onChanges }: PropTypes) {
         <input type='checkbox' name='oxchecked' value='X' onChange={handleOXCheckedChange} />
         <Label htmlFor='suffle'>X</Label> */}
 
-        <input
+        <RadioInput
           type='radio'
           id='oxchecked'
           name='oxchecked'
           value='O'
           checked={oxChecked === 'O' ? true : false}
           onChange={handleOXCheckedChange}
-        >
-          O
-        </input>
-        <input
+        />
+        <Label htmlFor='suffle'>O</Label>
+
+        <RadioInput
           type='radio'
           id='oxchecked'
           name='oxchecked'
           value='X'
           checked={oxChecked === 'X' ? true : false}
           onChange={handleOXCheckedChange}
-        >
-          X
-        </input>
+        />
+        <Label htmlFor='suffle'>X</Label>
       </Div>
     </Wrapper>
   );
@@ -111,6 +110,11 @@ const Input = styled.input`
   border: 1px solid black;
   height: 2.5rem;
   width: 100%;
+`;
+
+const RadioInput = styled.input`
+  width: 2rem;
+  margin-top: 0.5rem;
 `;
 
 const Label = styled.label`

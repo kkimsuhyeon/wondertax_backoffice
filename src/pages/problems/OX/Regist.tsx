@@ -58,15 +58,13 @@ function Regist() {
           <GoPencil />
           문제 작성
         </SubjectText>
-        {/* <article>
+        <article>
           <OXTitleForm values={titleValue} onChanges={handleTitleChanges} />
-        </article> */}
+        </article>
       </Section>
-      {/* <SubmitWrapper>
-        <button disabled={buttonStatus} onClick={handleSubmit}>
-          제출
-        </button>
-      </SubmitWrapper> */}
+      <SubmitWrapper>
+        <button disabled={buttonStatus}>제출</button>
+      </SubmitWrapper>
     </Wrapper>
   );
 }
