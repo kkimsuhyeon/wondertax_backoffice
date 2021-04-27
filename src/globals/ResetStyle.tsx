@@ -25,7 +25,7 @@ export default createGlobalStyle`
   }
   body {
     line-height: 1;
-    background-color: #fafafa;
+    background-color: #eeeeee;
   }
   ol,
   ul {

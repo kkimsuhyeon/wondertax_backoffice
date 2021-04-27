@@ -2,11 +2,14 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 export const palette = {
-  lemon: '#f8e88e',
-  black: '#000000',
   white: '#ffffff',
   whiteGray: '#fafafa',
-  blackGray: '#555',
+  whiteLemon: '#fbfdba',
+  lemon: '#fff600',
+  yellow: '#ffe227',
+  blackGray: '#393e46',
+  subBlack: '#222831',
+  black: '#000000',
 };
 
 function StyledThemeProvider({ children }: { children: React.ReactNode }) {

@@ -16,9 +16,9 @@ function Header({ isOpen, onClick }: PropTypes) {
           <div />
         </Hamburger>
         <Info>
-          <Profile>
-            <ProfileImg src='images/suhyeon.png' />
-          </Profile>
+          {/* <Profile> */}
+          {/* <ProfileImg src='images/suhyeon.png' /> */}
+          {/* </Profile> */}
           <div>Hi~ 수현</div>
         </Info>
         <Title>Wondertax Backoffice</Title>
@@ -36,7 +36,7 @@ const Content = styled.div<{ isOpen: boolean }>`
     position: relative;
     display: flex;
     align-items: center;
-    background-color: ${theme.lemon};
+    background-color: ${theme.subBlack};
 
     ${isOpen &&
     css`
@@ -46,6 +46,8 @@ const Content = styled.div<{ isOpen: boolean }>`
         left: 11.3rem;
 
         & > div {
+          background-color: ${theme.black};
+
           &:nth-of-type(1) {
             transform: rotate(-45deg);
           }
@@ -59,7 +61,6 @@ const Content = styled.div<{ isOpen: boolean }>`
       }
 
       & > ${Info} {
-        padding-left: 1rem;
         width: 13rem;
       }
 
@@ -90,7 +91,8 @@ const Info = styled.div`
     display: flex;
     align-items: center;
     & > div {
-      margin-left: 0.7rem;
+      margin-left: 2rem;
+      white-space: nowrap;
 
       &:first-of-type {
         font-weight: bold;
@@ -104,6 +106,7 @@ const Title = styled.div`
   font-weight: bold;
   margin-left: 4.5rem;
   transition: margin-left 0.15s ease-out;
+  color: ${({ theme }) => theme.white};
 `;
 
 const Hamburger = styled.div`
@@ -122,7 +125,7 @@ const Hamburger = styled.div`
     & > div {
       height: 2px;
       border-radius: 1rem;
-      background-color: ${theme.black};
+      background-color: ${theme.white};
       transition: transform 0.2s ease-out;
     }
   `}
@@ -134,5 +137,5 @@ const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 3.9rem;
-  border-bottom: 1px solid #eaeaea;
+  /* border-bottom: 1px solid #eaeaea; */
 `;

@@ -55,7 +55,7 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
     margin-top: 3.9rem;
     overflow: hidden;
     width: ${isOpen ? '13rem' : '4rem'};
-    background-color: ${theme.white};
+    background-color: ${theme.subBlack};
     transition: width 0.15s ease-out;
     border-right: 1px solid #eaeaea;
   `}
@@ -67,7 +67,7 @@ const Menu = styled(NavLink)`
     align-items: center;
     padding: 1rem 1.2rem 1rem;
     text-decoration: none;
-    color: black;
+    color: ${theme.white};
 
     & > svg {
       margin-right: 2rem;
@@ -75,6 +75,7 @@ const Menu = styled(NavLink)`
 
     &.active {
       background-color: ${theme.lemon};
+      color: ${theme.black};
     }
   `}
 `;
