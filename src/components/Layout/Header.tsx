@@ -44,6 +44,7 @@ const Content = styled.div<{ isOpen: boolean }>`
         width: 0.7rem;
         height: 0.56rem;
         left: 11.3rem;
+
         & > div {
           &:nth-of-type(1) {
             transform: rotate(-45deg);
@@ -101,7 +102,7 @@ const Info = styled.div`
 const Title = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
-  margin-left: 3.5rem;
+  margin-left: 4.5rem;
   transition: margin-left 0.15s ease-out;
 `;
 
@@ -109,7 +110,7 @@ const Hamburger = styled.div`
   ${({ theme }) => css`
     position: absolute;
     z-index: 1;
-    left: 1rem;
+    left: 1.5rem;
     width: 1.2rem;
     height: 0.8rem;
     display: flex;
@@ -132,6 +133,6 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 3.5rem;
+  height: 3.9rem;
   border-bottom: 1px solid #eaeaea;
 `;

@@ -43,6 +43,7 @@ function Regist() {
 
   return (
     <Wrapper>
+      <PageTitle>ox문제등록</PageTitle>
       <Section>
         <SubjectText>
           <GoTag />
@@ -57,15 +58,13 @@ function Regist() {
           <GoPencil />
           문제 작성
         </SubjectText>
-        {/* <article>
+        <article>
           <OXTitleForm values={titleValue} onChanges={handleTitleChanges} />
-        </article> */}
+        </article>
       </Section>
-      {/* <SubmitWrapper>
-        <button disabled={buttonStatus} onClick={handleSubmit}>
-          제출
-        </button>
-      </SubmitWrapper> */}
+      <SubmitWrapper>
+        <button disabled={buttonStatus}>제출</button>
+      </SubmitWrapper>
     </Wrapper>
   );
 }
@@ -101,4 +100,11 @@ const SubmitWrapper = styled.article`
     height: 3rem;
     font-size: 1rem;
   }
+`;
+
+const PageTitle = styled.p`
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 2rem;
 `;
