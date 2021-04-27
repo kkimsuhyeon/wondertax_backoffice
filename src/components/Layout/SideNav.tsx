@@ -49,7 +49,7 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
     height: 100%;
     margin-top: 3.5rem;
     overflow: hidden;
-    width: ${isOpen ? '10rem' : '3rem'};
+    width: ${isOpen ? '13rem' : '3rem'};
     background-color: ${theme.white};
     transition: width 0.15s ease-out;
     border-right: 1px solid #eaeaea;

@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 export const palette = {
-  lemon: '#fffacd',
+  lemon: '#f8e88e',
   black: '#000000',
   white: '#ffffff',
   whiteGray: '#fafafa',

@@ -16,8 +16,10 @@ function Header({ isOpen, onClick }: PropTypes) {
           <div />
         </Hamburger>
         <Info>
-          <div>name</div>
-          <div>position</div>
+          <Profile>
+            <ProfileImg src='images/suhyeon.png' />
+          </Profile>
+          <div>Hi~ 수현</div>
         </Info>
         <Title>Wondertax Backoffice</Title>
       </Content>
@@ -41,7 +43,7 @@ const Content = styled.div<{ isOpen: boolean }>`
       & > ${Hamburger} {
         width: 0.7rem;
         height: 0.56rem;
-        left: 8.5rem;
+        left: 11.3rem;
         & > div {
           &:nth-of-type(1) {
             transform: rotate(-45deg);
@@ -56,7 +58,8 @@ const Content = styled.div<{ isOpen: boolean }>`
       }
 
       & > ${Info} {
-        width: 10rem;
+        padding-left: 1rem;
+        width: 13rem;
       }
 
       & > ${Title} {
@@ -64,6 +67,16 @@ const Content = styled.div<{ isOpen: boolean }>`
       }
     `};
   `}
+`;
+
+const Profile = styled.div`
+  width: 45px;
+  height: 45px;
+`;
+
+const ProfileImg = styled.img`
+  width: 100%;
+  border-radius: 50%;
 `;
 
 const Info = styled.div`
@@ -74,9 +87,7 @@ const Info = styled.div`
     overflow: hidden;
     transition: width 0.2s ease-out;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    align-items: center;
     & > div {
       margin-left: 0.7rem;
 
@@ -88,7 +99,9 @@ const Info = styled.div`
 `;
 
 const Title = styled.div`
-  margin-left: 3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 3.5rem;
   transition: margin-left 0.15s ease-out;
 `;
 
@@ -97,7 +110,7 @@ const Hamburger = styled.div`
     position: absolute;
     z-index: 1;
     left: 1rem;
-    width: 1rem;
+    width: 1.2rem;
     height: 0.8rem;
     display: flex;
     flex-direction: column;
@@ -106,7 +119,6 @@ const Hamburger = styled.div`
     cursor: pointer;
 
     & > div {
-      width: 100%;
       height: 2px;
       border-radius: 1rem;
       background-color: ${theme.black};
