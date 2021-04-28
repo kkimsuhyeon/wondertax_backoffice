@@ -6,29 +6,23 @@ const instance = axios.create({
   baseURL: BASE_URL,
 });
 
-instance.interceptors.response
-  .use
-  // (response) => {
-  //   console.log(response);
-  //   return response;
-  // },
-  // (err) => {
-  //   console.log(err);
-  //   return err;
-  // }
-  ();
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return error;
+  }
+);
 
-instance.interceptors.request
-  .use
-  // (request) => {
-  //   console.log(request);
-  //   return request;
-  // },
-  // (err) => {
-  //   console.log(err);
-  //   return err;
-  // }
-  ();
+instance.interceptors.request.use(
+  (request) => {
+    return request;
+  },
+  (error) => {
+    return error;
+  }
+);
 
 export interface CreateRequestArguments {
   endpoint: AxiosRequestConfig['url'];

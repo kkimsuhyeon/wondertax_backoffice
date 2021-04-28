@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 export const palette = {
   white: '#ffffff',
-  whiteGray: '#fafafa',
+  whiteGray: '#eeeeee',
   whiteLemon: '#fbfdba',
   lemon: '#fff600',
   yellow: '#fae423',
