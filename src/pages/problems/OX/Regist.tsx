@@ -3,7 +3,7 @@ import OXTitleForm, { PropTypes as OXTitleFormPropTypes } from 'components/quest
 import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';
 import styled from 'styled-components';
 import { GoTag, GoPencil } from 'react-icons/go';
-import { requestProblemRegist } from 'apis/question';
+import { requestProblemRegist } from 'apis/problem';
 
 function Regist() {
   const [chapterValue, setChapterValue] = useState<Array<string>>();

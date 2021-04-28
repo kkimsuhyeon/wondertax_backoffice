@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
-import { requestProblemRegist } from 'apis/question';
+import { requestProblemRegist } from 'apis/problem';
 
 import useInput from 'hooks/useInput';
 

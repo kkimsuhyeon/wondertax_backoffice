@@ -13,7 +13,7 @@ export interface ProblemListItem {
   unit: Array<number>;
 }
 
-export const requestProblemList = async (): Promise<{
+export const requestBasicList = async (): Promise<{
   entities: Array<ProblemListItem>;
 }> => {
   const { data } = await instance({

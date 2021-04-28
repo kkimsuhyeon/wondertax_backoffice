@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { requestProblemDetail } from 'apis/question';
+import { requestProblemDetail } from 'apis/problem';
 
 import useInput from 'hooks/useInput';
 

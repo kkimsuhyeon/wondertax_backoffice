@@ -13,11 +13,11 @@ export interface Structure<T>
 export interface PropTypes<T> {
   structure: Structure<T>;
   list?: Array<T>;
-  tableKey: keyof T;
+  uniqueKey: keyof T;
   onClick?: (args: T) => void;
 }
 
-function Table<T>({ structure, list = [], tableKey, onClick }: PropTypes<T>) {
+function Table<T>({ structure, list = [], uniqueKey, onClick }: PropTypes<T>) {
   return (
     <Wrapper>
       <Header>
@@ -31,9 +31,9 @@ function Table<T>({ structure, list = [], tableKey, onClick }: PropTypes<T>) {
       </Header>
       <Body>
         {list.map((item) => (
-          <Row key={`${item[tableKey]}`} onClick={onClick ? () => onClick(item) : undefined}>
+          <Row key={`${item[uniqueKey]}`} onClick={onClick ? () => onClick(item) : undefined}>
             {structure.map(({ flex, id, parser }) => (
-              <Data key={`${item[tableKey]}-${id}`} flex={flex}>
+              <Data key={`${item[uniqueKey]}-${id}`} flex={flex}>
                 {parser ? parser(item) : item[id]}
               </Data>
             ))}
@@ -47,7 +47,6 @@ function Table<T>({ structure, list = [], tableKey, onClick }: PropTypes<T>) {
 export default Table;
 
 const Wrapper = styled.div`
-  text-align: center;
   border-top: 1px solid ${({ theme }) => theme.blackGray};
   border-left: 1px solid ${({ theme }) => theme.blackGray};
   background-color: white;
@@ -70,16 +69,26 @@ const Row = styled.div<{ onClick?: () => void }>`
 const Header = styled(Row)`
   ${({ theme }) => css`
     background-color: ${theme.whiteGray};
+
+    & > div {
+      text-align: center;
+    }
   `}
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+  & > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 
 const Data = styled.div<{ flex: string }>`
   ${({ flex, theme }) => css`
     border-right: 1px solid ${theme.blackGray};
     border-bottom: 1px solid ${theme.blackGray};
-    padding: 1rem 0 1rem;
+    padding: 1rem 0.5rem 1rem;
     flex: ${flex};
   `}
 `;
