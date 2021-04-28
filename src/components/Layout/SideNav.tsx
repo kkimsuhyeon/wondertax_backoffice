@@ -74,7 +74,7 @@ const Menu = styled(NavLink)`
     }
 
     &.active {
-      background-color: ${theme.lemon};
+      background-color: ${theme.yellow};
       color: ${theme.black};
     }
   `}

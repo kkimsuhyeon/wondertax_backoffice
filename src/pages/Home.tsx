@@ -64,7 +64,7 @@ const Wrapper = styled.div`
 
 const Card = styled.div`
   margin-top: 2rem;
-  width: 25%;
+  width: 280px;
   height: 400px;
   border-radius: 1.5rem;
   background-color: white;
