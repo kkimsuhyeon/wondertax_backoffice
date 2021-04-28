@@ -6,18 +6,21 @@ import Layout from 'components/Layout';
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';
 import LogIn from 'pages/login/Login';
+import LogInLayout from 'components/Layout/Login/loginlayout';
 
 function Root() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Switch>
-          <Route exact path='/' component={Home} />
+      <Switch>
+        <LogInLayout>
           <Route path='/login' component={LogIn} />
+        </LogInLayout>
+        <Layout>
+          <Route exact path='/' component={Home} />
           <Route path='/problems' component={Problems} />
           <Redirect path='*' to='/' />
-        </Switch>
-      </Layout>
+        </Layout>
+      </Switch>
     </BrowserRouter>
   );
 }
