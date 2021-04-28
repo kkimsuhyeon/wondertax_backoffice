@@ -12,10 +12,10 @@ function LogIn() {
         <Logo>Wondertax</Logo>
         <LoginForm>
           <Label>Email Address </Label>
-          <Input value='id' onChange={handleIdChanges} />
+          <Input placeholder='id' onChange={handleIdChanges} />
 
           <Label>Password </Label>
-          <Input value='password' onChange={handleIdChanges} />
+          <Input placeholder='password' onChange={handleIdChanges} />
           <Button type='submit'>Log In</Button>
         </LoginForm>
         <Join>
