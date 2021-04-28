@@ -8,20 +8,19 @@ function LogIn() {
   };
   return (
     <Wrapper>
-      <Div flex='1'>
-        <Logo>Wondertax</Logo>
-        <LoginForm>
-          <Label>Email Address </Label>
-          <Input placeholder='id' onChange={handleIdChanges} />
+      <Logo>Wondertax</Logo>
+      <Lemon src='images/lemon.png' />
+      <LoginForm>
+        <Label>Email Address </Label>
+        <Input placeholder='id' onChange={handleIdChanges} />
 
-          <Label>Password </Label>
-          <Input placeholder='password' onChange={handleIdChanges} />
-          <Button type='submit'>Log In</Button>
-        </LoginForm>
-        <Join>
-          Don&apos;t have an account? <a href='/'>Sing up</a>
-        </Join>
-      </Div>
+        <Label>Password </Label>
+        <Input placeholder='password' onChange={handleIdChanges} />
+        <Button type='submit'>Log In</Button>
+      </LoginForm>
+      <Join>
+        Don&apos;t have an account? <a href='/'>Sing up</a>
+      </Join>
     </Wrapper>
   );
 }
@@ -29,22 +28,16 @@ function LogIn() {
 export default LogIn;
 
 const Wrapper = styled.div`
-  max-width: 900px;
+  max-width: 470px;
+  height: 600px;
+  flex-direction: column;
   display: flex;
+  align-items: center;
   margin: 0 auto;
-`;
-
-const Div = styled.div<{ flex?: CSSProperties['flex'] }>`
-  ${({ flex }) => flex && `flex: ${flex}`};
-  width: 100%;
-  margin-right: 2rem;
-
-  &:last-child {
-    margin-right: initial;
-  }
-  > img {
-    width: 100%;
-  }
+  box-shadow: 2px 2px 4px 2px rgba(165, 165, 165, 0.1);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0 4.6rem;
 `;
 
 const Logo = styled.div`
@@ -52,14 +45,14 @@ const Logo = styled.div`
   font-weight: bold;
   text-align: center;
   padding: 1rem;
-  margin-bottom: 1.5rem;
+  padding-top: 50px;
+  margin-bottom: 1.2rem;
 `;
 
 const LoginForm = styled.form`
-  margin: 0 auto;
   border-bottom: 1px solid rgba(160, 160, 160, 0.3);
   height: 225px;
-  max-width: 340px;
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -103,4 +96,9 @@ const Join = styled.p`
     color: #ffe600;
     text-shadow: rgba(165, 165, 165, 1);
   }
+`;
+
+const Lemon = styled.img`
+  width: 170px;
+  margin-bottom: 2.6rem;
 `;

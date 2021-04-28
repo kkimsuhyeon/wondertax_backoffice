@@ -7,21 +7,20 @@ import AuthRoute from 'components/common/AuthRoute';
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';
 import LogIn from 'pages/login/Login';
+import LogInLayout from 'components/Layout/Login/loginlayout';
 
 function Root() {
   return (
     <BrowserRouter>
       <Switch>
-        <AuthRoute isAllow={() => {}} exact path='/login' component={LogIn} />
-        <AuthRoute isAllow={() => {}} path='/'>
-          <Layout>
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/problems' component={Problems} />
-              <Redirect path='*' to='/' />
-            </Switch>
-          </Layout>
-        </AuthRoute>
+        <LogInLayout>
+          <Route path='/login' component={LogIn} />
+        </LogInLayout>
+        <Layout>
+          <Route exact path='/' component={Home} />
+          <Route path='/problems' component={Problems} />
+          <Redirect path='*' to='/' />
+        </Layout>
       </Switch>
     </BrowserRouter>
   );
