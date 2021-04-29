@@ -7,18 +7,20 @@ interface ButtonType {
   height?: CSSProperties['height'];
   margin?: CSSProperties['margin'];
   padding?: CSSProperties['padding'];
+  weight?: CSSProperties['fontWeight'];
 }
 
-const CommonButton = styled.button.attrs<{ status: ButtonStatus }>(({ status }) => ({
-  type: 'button',
+const CommonButton = styled.button.attrs<{ status: ButtonStatus }>(({ status, type = 'button' }) => ({
+  type: type,
   disabled: status === 'disabled',
 }))<ButtonType>`
-  ${({ width, height, margin, padding }) => css`
-    border-radius: 0.18rem;
-    width: ${width && '100%'};
-    height: ${height && '2rem'};
+  ${({ width, height, margin, padding, weight }) => css`
+    border-radius: 0.36rem;
+    width: ${width ?? '100%'};
+    height: ${height ?? '2rem'};
     ${margin && `margin: ${margin}`};
     ${padding && `padding: ${padding}`};
+    ${weight && `font-weight: ${weight}`};
   `}
 `;
 
@@ -27,8 +29,8 @@ export const Button = styled(CommonButton)<{ status?: ButtonStatus }>`
     if (status === 'active')
       return css`
         color: ${theme.black};
-        background-color: ${theme.lemon};
-        border: ${theme.lemon};
+        background-color: ${theme.yellow};
+        border: ${theme.yellow};
       `;
     if (status === 'disabled')
       return css`

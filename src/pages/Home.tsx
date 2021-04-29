@@ -2,21 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Home() {
-  const Register = [
-    {
-      type: 'Basic',
-      url: '/problems/basic/regist',
-    },
-    {
-      type: 'OX',
-      url: '/problems/ox/regist',
-    },
-    {
-      type: 'Blank',
-      url: '/problems/blank/regist',
-    },
-  ];
-
   return (
     <Wrapper>
       <Card>

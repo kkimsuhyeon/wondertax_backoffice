@@ -6,16 +6,14 @@ import AuthRoute from 'components/common/AuthRoute';
 
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';
-import LogIn from 'pages/login/Login';
-import LogInLayout from 'components/Layout/Login/loginlayout';
+import LogIn from 'pages/Login';
 
 function Root() {
   return (
     <BrowserRouter>
       <Switch>
-        <LogInLayout>
-          <Route path='/login' component={LogIn} />
-        </LogInLayout>
+        <Route exact path='/login' component={LogIn} />
+        <Route exact path='/signup' component={() => <>signup</>} />
         <Layout>
           <Route exact path='/' component={Home} />
           <Route path='/problems' component={Problems} />
