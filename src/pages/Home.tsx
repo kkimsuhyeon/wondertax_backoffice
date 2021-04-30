@@ -27,15 +27,6 @@ function Home() {
           </List>
         </BoxContent>
       </Card>
-      {/* <PageTitle>문제 등록</PageTitle>
-      <ul>
-        <List>
-          <a href='/problems/basic/regist'>베이직 문제 등록</a>
-        </List>
-        <List>
-          <a href='/problems/ox/regist'>ox 문제 등록</a>
-        </List>
-      </ul> */}
     </Wrapper>
   );
 }

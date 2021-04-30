@@ -10,17 +10,17 @@ import LogIn from 'pages/Login';
 
 function Root() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/login' component={LogIn} />
-        <Route exact path='/signup' component={() => <>signup</>} />
-        <Layout>
+    <Switch>
+      <Route exact path='/login' component={LogIn} />
+      <Route exact path='/signup' component={() => <>signup</>} />
+      <Layout>
+        <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/problems' component={Problems} />
-          <Redirect path='*' to='/' />
-        </Layout>
-      </Switch>
-    </BrowserRouter>
+          <Redirect to='/' />
+        </Switch>
+      </Layout>
+    </Switch>
   );
 }
 
