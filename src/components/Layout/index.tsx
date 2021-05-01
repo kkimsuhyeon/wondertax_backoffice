@@ -26,8 +26,8 @@ const Main = styled.div<{ isOpen: boolean }>`
   ${({ theme, isOpen }) => css`
     margin-top: 3.5rem;
     padding: 1rem;
-    /* margin-left: ${isOpen ? '13rem' : '4rem'}; */
-    margin-left: 4rem;
+    margin-left: ${isOpen ? '13rem' : '4rem'};
+    /* margin-left: 4rem; */
     background-color: ${theme.whiteGray};
     transition: margin-left 0.2s ease-out;
   `}

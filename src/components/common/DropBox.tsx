@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 export interface DropboxItem {
@@ -15,16 +15,26 @@ interface WrapperPropTypes {
 
 export interface PropTypes extends Omit<WrapperPropTypes, 'selected'> {
   list: Array<DropboxItem>;
-  value?: DropboxItem['value'];
+  value: DropboxItem['value'];
   onChange: (value: DropboxItem) => void;
   count?: string;
   placeholder?: string;
   height?: string;
 }
 
-function DropBox({ list, count = '4', placeholder, height = '2.5rem', width = '100%', disabled = false, onChange, margin }: PropTypes) {
+function DropBox({
+  list,
+  value,
+  count = '4',
+  placeholder,
+  height = '2.5rem',
+  width = '100%',
+  disabled = false,
+  onChange,
+  margin,
+}: PropTypes) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [{ name, value }, setSelectValue] = useState<DropboxItem>({ name: '', value: '' });
+  const [selectValue, setSelectValue] = useState<DropboxItem>({ name: '', value: '' });
 
   const handleClick = useCallback(
     ({ name, value }) => {
@@ -43,6 +53,10 @@ function DropBox({ list, count = '4', placeholder, height = '2.5rem', width = '1
     }
   }, []);
 
+  useEffect(() => {
+    setSelectValue({ value: value, name: list.find((item) => item.value === value)?.name as string });
+  }, [list, value]);
+
   return (
     <Wrapper
       tabIndex={0}
@@ -53,7 +67,7 @@ function DropBox({ list, count = '4', placeholder, height = '2.5rem', width = '1
       selected={value}
       margin={margin}
     >
-      <Selector height={height}>{value === '' ? placeholder : name}</Selector>
+      <Selector height={height}>{selectValue.value === '' ? placeholder : selectValue.name}</Selector>
       <List count={count}>
         {list.map(({ name, value }) => (
           <div
