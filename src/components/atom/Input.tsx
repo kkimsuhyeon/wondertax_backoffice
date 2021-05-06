@@ -25,5 +25,9 @@ export const Input = styled.input.attrs(() => ({
     font-size: ${size ?? '1rem'};
     ${align && `text-align:${align};`}
     ${color && `color:${color};`}
+
+    &::placeholder {
+      opacity: 0.5;
+    }
   `}
 `;
