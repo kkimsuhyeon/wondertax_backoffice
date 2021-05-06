@@ -1,24 +1,24 @@
 import React, { useCallback, useState } from 'react';
-import OXTitleForm, { PropTypes as OXTitleFormPropTypes } from 'components/question/OXTitleForm';
-import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';
+// import OXTitleForm, { PropTypes as OXTitleFormPropTypes } from 'components/problems/OXTitleForm';
+import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/problems/ChapterForm';
 import styled from 'styled-components';
 import { GoTag, GoPencil } from 'react-icons/go';
 import { requestProblemRegist } from 'apis/problem';
 
 function Regist() {
   const [chapterValue, setChapterValue] = useState<Array<string>>();
-  const [titleValue, setTitleValue] = useState<OXTitleFormPropTypes['values']>({ title: '', difficult: '', answer: '' });
+  // const [titleValue, setTitleValue] = useState<OXTitleFormPropTypes['values']>({ title: '', difficult: '', answer: '' });
   const [buttonStatus, setButtonStatus] = useState(false);
 
   const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
     setChapterValue(value);
   }, []);
 
-  const handleTitleChanges = useCallback((partial: Partial<OXTitleFormPropTypes['values']>) => {
-    setTitleValue((prev) => {
-      return { ...prev, ...partial };
-    });
-  }, []);
+  // const handleTitleChanges = useCallback((partial: Partial<OXTitleFormPropTypes['values']>) => {
+  //   setTitleValue((prev) => {
+  //     return { ...prev, ...partial };
+  //   });
+  // }, []);
 
   // const handleSubmit = useCallback(async () => {
   //   const { answer, difficult, title } = titleValue;
@@ -58,9 +58,7 @@ function Regist() {
           <GoPencil />
           문제 작성
         </SubjectText>
-        <article>
-          <OXTitleForm values={titleValue} onChanges={handleTitleChanges} />
-        </article>
+        <article>{/* <OXTitleForm values={titleValue} onChanges={handleTitleChanges} /> */}</article>
       </Section>
       <SubmitWrapper>
         <button disabled={buttonStatus}>제출</button>
