@@ -7,10 +7,10 @@ import { requestProblemDetail } from 'apis/problem';
 import useInput from 'hooks/useInput';
 
 import { Text } from 'components/atom/Box';
-import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/question/BasicTitleForm';
-import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/question/ExampleForm';
-import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/question/ChapterForm';
-import CommentForm from 'components/question/CommentForm';
+import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/BasicTitleForm';
+import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
+import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/problems/ChapterForm';
+import CommentForm from 'components/problems/BasicCommentForm';
 
 function Detail({
   history,
