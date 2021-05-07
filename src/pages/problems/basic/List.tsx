@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { RouteComponentProps } from 'react-router';
 
 import BasicList from 'containers/problems/BasicList';
 
-function List() {
+function List({ history }: RouteComponentProps) {
+  const handleClick = useCallback((args) => history.push(`/problems/basic/${args.id}`), [history]);
+
   return (
     <Wrapper>
-      <BasicList />
+      <BasicList onClick={handleClick} />
     </Wrapper>
   );
 }

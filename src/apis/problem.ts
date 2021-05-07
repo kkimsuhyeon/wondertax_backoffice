@@ -24,9 +24,8 @@ export const requestBasicList = async (): Promise<{
   return data;
 };
 
-export const requestProblemDetail = async ({ id }: { id: string }): Promise<{ entities: ProblemListItem }> => {
+export const requestProblemDetail = async ({ id }: { id: string }): Promise<{}> => {
   const { data } = await instance({ url: `/problem/${id}`, method: 'GET' });
-  console.log(data);
   return data;
 };
 
