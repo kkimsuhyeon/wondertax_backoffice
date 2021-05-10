@@ -5,14 +5,14 @@ import { Input } from 'components/atom/Input';
 
 export interface PropTypes {
   values: { 0: string; 1: string; 2: string; 3: string };
-  onChanges: ({ index, value }: { index: string; value: string }) => void;
+  onChanges: ({ index, value }: { index: keyof PropTypes['values']; value: string }) => void;
 }
 
 function BasicExampleForm({ onChanges, values }: PropTypes) {
   const handleChanges = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value, name } = e.target;
-      onChanges({ index: name, value: value });
+      onChanges({ index: (name as unknown) as keyof PropTypes['values'], value: value });
     },
     [onChanges]
   );

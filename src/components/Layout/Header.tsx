@@ -16,9 +16,6 @@ function Header({ isOpen, onClick }: PropTypes) {
           <div />
         </Hamburger>
         <Info>
-          {/* <Profile> */}
-          {/* <ProfileImg src='images/suhyeon.png' /> */}
-          {/* </Profile> */}
           <div>Hi~ 수현</div>
         </Info>
         <Title>Wondertax Backoffice</Title>
@@ -69,16 +66,6 @@ const Content = styled.div<{ isOpen: boolean }>`
       }
     `};
   `}
-`;
-
-const Profile = styled.div`
-  width: 45px;
-  height: 45px;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
-  border-radius: 50%;
 `;
 
 const Info = styled.div`

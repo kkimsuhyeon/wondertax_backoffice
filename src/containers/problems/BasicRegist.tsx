@@ -10,15 +10,22 @@ import BasicTitleForm, { PropTypes as TitleFormPropTypes } from 'components/prob
 import BasicExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
 import BasicCommentForm, { PropTypes as CommentFormPropTypes } from 'components/problems/BasicCommentForm';
 
+import useSpinner from 'hooks/useSpinner';
+
 import { requestProblemRegist } from 'apis/problem';
 
-function BasicRegist() {
+export interface PropTypes {
+  onSubmit: () => void;
+}
+
+function BasicRegist({ onSubmit }: PropTypes) {
+  const [activeSpinner] = useSpinner();
+
   const [chapterValues, setChapterValues] = useState<Array<string>>();
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
-  const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ '0': '', '1': '', '2': '', '3': '' });
+  const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ 0: '', 1: '', 2: '', 3: '' });
   const [commentValue, setCommentValue] = useState<CommentFormPropTypes['value']>('');
   const [isShuffle, setShuffle] = useState<boolean>(true);
-  const [isSubmit, setSubmit] = useState<boolean>(false);
 
   const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
     setChapterValues(value);
@@ -31,7 +38,7 @@ function BasicRegist() {
   const handleExampleChanges = useCallback<ExampleFormPropTypes['onChanges']>(({ value, index }) => {
     setExampleValues((prev) => {
       const temp = prev;
-      temp[index as unknown as keyof typeof exampleValues] = value;
+      temp[index] = value;
       return { ...temp };
     });
   }, []);
@@ -48,8 +55,7 @@ function BasicRegist() {
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValues;
     try {
-      setSubmit(true);
-
+      activeSpinner(true);
       await requestProblemRegist({
         shuffle: isShuffle,
         answerIdx: +answer,
@@ -61,18 +67,18 @@ function BasicRegist() {
         type: 'A',
         authorId: 1,
       });
-
       setTitleValues({ title: '', difficult: '', answer: '' });
       setCommentValue('');
       setExampleValues({ '0': '', '1': '', '2': '', '3': '' });
       setShuffle(true);
+      onSubmit();
     } catch (e) {
       console.log(e);
       throw e;
     } finally {
-      setSubmit(false);
+      activeSpinner(false);
     }
-  }, [isShuffle, titleValues, chapterValues, exampleValues, commentValue]);
+  }, [isShuffle, titleValues, activeSpinner, chapterValues, exampleValues, commentValue, onSubmit]);
 
   return (
     <Wrapper>
@@ -97,7 +103,7 @@ function BasicRegist() {
         <Input type='checkbox' checked={isShuffle} onChange={handleShuffle} id='suffle' width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <Button status={isSubmit ? 'disabled' : 'active'} onClick={handleSubmit} width='5rem' margin='0 0 0 auto'>
+        <Button status='active' onClick={handleSubmit} width='5rem'>
           제출
         </Button>
       </article>
