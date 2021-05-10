@@ -11,7 +11,6 @@ import OXList from './OX/List';
 import OXRegist from './OX/Regist';
 
 function Problems({ match: { url } }: RouteComponentProps) {
-  console.log(url);
   return (
     <Switch>
       <Route exact path={`${url}/basic`} component={BasicList} />

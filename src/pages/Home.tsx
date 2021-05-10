@@ -24,13 +24,13 @@ function Home({ history }: RouteComponentProps) {
           </div>
           <div>
             OX
-            <Button id='/problems/basic/regist' onClick={handleClick}>
+            <Button id='/problems/ox/regist' onClick={handleClick}>
               등록하기
             </Button>
           </div>
           <div>
             Blank
-            <Button id='/problems/basic/regist' onClick={handleClick}>
+            <Button id='/problems/blank/regist' onClick={handleClick}>
               등록하기
             </Button>
           </div>

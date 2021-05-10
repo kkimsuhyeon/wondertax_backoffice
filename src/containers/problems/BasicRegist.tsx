@@ -103,7 +103,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         <Input type='checkbox' checked={isShuffle} onChange={handleShuffle} id='suffle' width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <Button status='active' onClick={handleSubmit} width='5rem' margin='0 0 0 auto'>
+        <Button status='active' onClick={handleSubmit} width='5rem'>
           제출
         </Button>
       </article>

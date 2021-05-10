@@ -24,7 +24,29 @@ export const requestBasicList = async (): Promise<{
   return data;
 };
 
-export const requestProblemDetail = async ({ id }: { id: string }): Promise<{}> => {
+export const requestProblemDetail = async ({
+  id,
+}: {
+  id: string;
+}): Promise<{
+  entityData: {
+    answerIdx: number;
+    authorId: number;
+    choices: Array<string>;
+    commentary: string;
+    createdOn: string;
+    difficulty: string;
+    question: string;
+    shuffle: boolean;
+    type: string;
+    unit: Array<number>;
+  };
+  entityKey: {
+    id: string;
+    kind: string;
+    path: Array<string>;
+  };
+}> => {
   const { data } = await instance({ url: `/problem/${id}`, method: 'GET' });
   return data;
 };
