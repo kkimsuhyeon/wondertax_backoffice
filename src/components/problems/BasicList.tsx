@@ -20,7 +20,7 @@ const TABLE_STRUCTURE: BasicListTablePropTypes['structure'] = [
   { id: 'example2', title: '보기2', flex: '4' },
   { id: 'example3', title: '보기3', flex: '4' },
   { id: 'example4', title: '보기4', flex: '4' },
-  { id: 'answer', title: '답', flex: '0.5', parser: ({ answer }) => answer && answer + 1 },
+  { id: 'answer', title: '답', flex: '0.5', parser: ({ answer }) => answer !== undefined && answer + 1 },
 ];
 
 export interface PropTypes {
