@@ -12,6 +12,7 @@ import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
 import CommentForm, { PropTypes as CommentFormPropTypes } from 'components/problems/BasicCommentForm';
 import { Button } from 'components/atom/Button';
+import ChapterForm from 'components/problems/ChapterForm';
 
 export interface PropTypes {
   id: string;
@@ -20,10 +21,15 @@ export interface PropTypes {
 function BasicDetail({ id }: PropTypes) {
   const [activeSpinner] = useSpinner();
 
+  const [chapterValues, setChapterValuse] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
   const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ '0': '', '1': '', '2': '', '3': '' });
   const [commentValue, setCommentValue] = useState<CommentFormPropTypes['value']>('');
   const [isShuffle, setShuffle] = useState<boolean>(true);
+
+  const handleChapterChanges = useCallback((args: any) => {
+    setChapterValuse((prev) => ({ ...prev, ...args }));
+  }, []);
 
   const handleTitleChanges = useCallback<TitleFormPropTypes['onChanges']>((args) => {
     setTitleValues((prev) => ({ ...prev, ...args }));
@@ -50,6 +56,7 @@ function BasicDetail({ id }: PropTypes) {
     try {
       activeSpinner(true);
       const { entityData } = await requestProblemDetail({ id: id });
+      setChapterValuse({ book: String(entityData.unit[0]), chapter: String(entityData.unit[1]), topic: String(entityData.unit[2]) });
       setTitleValues({ answer: String(entityData.answerIdx), difficult: entityData.difficulty, title: entityData.question });
       setExampleValues({ '0': entityData.choices[0], '1': entityData.choices[1], '2': entityData.choices[2], '3': entityData.choices[3] });
       setCommentValue(entityData.commentary);
@@ -74,14 +81,14 @@ function BasicDetail({ id }: PropTypes) {
         question: titleValues.title,
         shuffle: isShuffle,
         type: 'A',
-        unit: ['0', '0', ' 0'],
+        unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
       });
     } catch (e) {
       console.log(e);
     } finally {
       activeSpinner(false);
     }
-  }, []);
+  }, [activeSpinner, titleValues, exampleValues, commentValue, isShuffle, id, chapterValues]);
 
   useEffect(() => {
     handleUpdate();
@@ -89,6 +96,9 @@ function BasicDetail({ id }: PropTypes) {
 
   return (
     <Wrapper>
+      <article>
+        <ChapterForm values={chapterValues} onChange={handleChapterChanges} />
+      </article>
       <article>
         <TitleForm values={titleValues} onChanges={handleTitleChanges} />
       </article>

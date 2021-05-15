@@ -8,7 +8,8 @@ function List() {
   const [chapterValue, setChapterValue] = useState<Array<string>>();
   // const [titleValue, setTitleValue] = useState<OXTitleFormPropTypes['values']>({ title: '', difficult: '', answer: '' });
   const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
-    setChapterValue(value);
+    console.log(value);
+    // setChapterValue(value);
   }, []);
 
   // const handleTitleChanges = useCallback((partial: Partial<OXTitleFormPropTypes['values']>) => {

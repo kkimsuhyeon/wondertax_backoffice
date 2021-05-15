@@ -11,7 +11,8 @@ function Regist() {
   const [buttonStatus, setButtonStatus] = useState(false);
 
   const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
-    setChapterValue(value);
+    console.log(value);
+    // setChapterValue(value);
   }, []);
 
   // const handleTitleChanges = useCallback((partial: Partial<OXTitleFormPropTypes['values']>) => {
@@ -50,7 +51,7 @@ function Regist() {
           주제 작성
         </SubjectText>
         <article>
-          <ChapterForm onChange={handleChapterChange} />
+          <ChapterForm onChange={handleChapterChange} values={{ book: '', chapter: '', topic: '' }} />
         </article>
       </Section>
       <Section>

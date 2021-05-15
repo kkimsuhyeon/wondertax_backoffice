@@ -21,14 +21,14 @@ export interface PropTypes {
 function BasicRegist({ onSubmit }: PropTypes) {
   const [activeSpinner] = useSpinner();
 
-  const [chapterValues, setChapterValues] = useState<Array<string>>();
+  const [chapterValues, setChapterValues] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
   const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ 0: '', 1: '', 2: '', 3: '' });
   const [commentValue, setCommentValue] = useState<CommentFormPropTypes['value']>('');
   const [isShuffle, setShuffle] = useState<boolean>(true);
 
   const handleChapterChange = useCallback<ChapterFormPropTypes['onChange']>((value) => {
-    setChapterValues(value);
+    setChapterValues((prev) => ({ ...prev, ...value }));
   }, []);
 
   const handleTitleChanges = useCallback<TitleFormPropTypes['onChanges']>((args) => {
@@ -61,7 +61,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         answerIdx: +answer,
         difficulty: difficult,
         question: title,
-        unit: chapterValues?.slice(0, 3) as Array<string>,
+        unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
         choices: [exampleValues['0'], exampleValues['1'], exampleValues['2']],
         comment: commentValue,
         type: 'A',
@@ -83,7 +83,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
   return (
     <Wrapper>
       <article>
-        <ChapterForm onChange={handleChapterChange} />
+        <ChapterForm onChange={handleChapterChange} values={chapterValues} />
       </article>
       <article>
         <BasicTitleForm values={titleValues} onChanges={handleTitleChanges} />
