@@ -75,7 +75,7 @@ function BasicDetail({ id }: PropTypes) {
         id: id,
         answerIdx: +titleValues.answer,
         authorId: 1,
-        choices: [exampleValues[0], exampleValues[1], exampleValues[2]],
+        choices: [exampleValues[0], exampleValues[1], exampleValues[2], exampleValues[3]],
         comment: commentValue,
         difficulty: titleValues.difficult,
         question: titleValues.title,
