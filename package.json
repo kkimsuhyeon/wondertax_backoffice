@@ -28,10 +28,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "set PORT=4000 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "yarn build && firebase deploy --project wondertax --only hosting:admin"
   },
   "eslintConfig": {
     "extends": [

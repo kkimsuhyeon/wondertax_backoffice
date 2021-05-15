@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "production": "wondertax"
+  },
+  "targets": {
+    "wondertax": {
+      "hosting": {
+        "admin": [
+          "wondertax-admin"
+        ],
+        "add": [
+          "wondertax-e2878"
+        ]
+      }
+    }
+  }
+}
