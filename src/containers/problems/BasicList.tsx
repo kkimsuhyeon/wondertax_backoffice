@@ -4,7 +4,11 @@ import { requestBasicList } from 'apis/problem';
 
 import List, { PropTypes as ListPropTypes } from 'components/problems/BasicList';
 
-function BasicList() {
+export interface PropTypes {
+  onClick: ListPropTypes['onClick'];
+}
+
+function BasicList({ onClick }: PropTypes) {
   const [list, setList] = useState<ListPropTypes['list']>();
 
   const handleRequestList = useCallback(async () => {
@@ -31,7 +35,7 @@ function BasicList() {
 
   return (
     <article>
-      <List list={list} uniqueKey='id' />
+      <List list={list} uniqueKey='id' onClick={onClick} />
     </article>
   );
 }

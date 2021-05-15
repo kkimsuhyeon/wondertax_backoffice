@@ -1,31 +1,40 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
 
-function Home() {
+function Home({ history }: RouteComponentProps) {
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const { id } = e.target as HTMLElement;
+      history.push(id);
+    },
+    [history]
+  );
+
   return (
     <Wrapper>
       <Card>
-        <BoxTitle>문제 등록</BoxTitle>
-        <BoxContent>
-          <List>
+        <Title>문제 등록</Title>
+        <Content>
+          <div>
             Basic
-            <a href='/problems/basic/regist'>
-              <RegisterButton>등록하기</RegisterButton>
-            </a>
-          </List>
-          <List>
+            <Button id='/problems/basic/regist' onClick={handleClick}>
+              등록하기
+            </Button>
+          </div>
+          <div>
             OX
-            <a href='/problems/ox/regist'>
-              <RegisterButton>등록하기</RegisterButton>
-            </a>
-          </List>
-          <List>
+            <Button id='/problems/ox/regist' onClick={handleClick}>
+              등록하기
+            </Button>
+          </div>
+          <div>
             Blank
-            <a href='/problems/blank/regist'>
-              <RegisterButton>등록하기</RegisterButton>
-            </a>
-          </List>
-        </BoxContent>
+            <Button id='/problems/blank/regist' onClick={handleClick}>
+              등록하기
+            </Button>
+          </div>
+        </Content>
       </Card>
     </Wrapper>
   );
@@ -34,44 +43,38 @@ function Home() {
 export default Home;
 
 const Wrapper = styled.div`
-  max-width: 80rem;
-  margin: 0 auto;
+  max-width: 90rem;
+  margin: 2rem auto 0;
 `;
 
 const Card = styled.div`
-  margin-top: 2rem;
   width: 280px;
   height: 400px;
   border-radius: 1.5rem;
   background-color: white;
-  box-shadow: 2px 2px 4px 2px rgba(139, 139, 139, 0.2);
+  box-shadow: 2px 2px 4px 2px rgba(172, 166, 166, 0.2);
+  padding: 2.5rem;
 `;
 
-const BoxTitle = styled.p`
+const Title = styled.div`
   font-size: 1.3rem;
   text-align: center;
   font-weight: bold;
-  padding-top: 2.5rem;
+  margin-bottom: 3rem;
 `;
 
-const BoxContent = styled.ul`
-  padding: 2.8rem;
-`;
-
-const List = styled.li`
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.3rem;
-  & > a {
-    color: #333;
-    text-decoration: none;
-    line-height: 1;
+const Content = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  & > div {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
-const RegisterButton = styled.button`
+const Button = styled.button`
   font-size: 0.9rem;
   width: 90px;
   height: 38px;

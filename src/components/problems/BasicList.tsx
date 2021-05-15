@@ -25,7 +25,7 @@ const TABLE_STRUCTURE: BasicListTablePropTypes['structure'] = [
 
 export interface PropTypes {
   list: BasicListTablePropTypes['list'];
-  onClick?: BasicListTablePropTypes['onClick'];
+  onClick: BasicListTablePropTypes['onClick'];
   uniqueKey: BasicListTablePropTypes['uniqueKey'];
 }
 
