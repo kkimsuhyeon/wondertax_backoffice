@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-export const BASE_URL = 'https://wondertax.du.r.appspot.com/api';
+export const BASE_URL = 'https://api.wonderpass.tv/v1/admin';
 
 const instance = axios.create({
   baseURL: BASE_URL,
