@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,12 +12,16 @@ function Detail({
     params: { basicId },
   },
 }: RouteComponentProps<{ basicId: string }>) {
+  const handleToList = useCallback(() => {
+    history.push('/problems/basic');
+  }, [history]);
+
   return (
     <Wrapper>
       <Text align='center' size='2rem' margin='0 0 3rem 0'>
         기본 문제 수정
       </Text>
-      <BasicDetail id={basicId} />
+      <BasicDetail id={basicId} onToList={handleToList} />
     </Wrapper>
   );
 }

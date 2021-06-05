@@ -6,7 +6,7 @@ import useSpinner from 'hooks/useSpinner';
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
 
-import { requestProblemDetail, requestProblemModify } from 'apis/problem';
+import { requestProblemDetail, requestProblemModify, requestDelete } from 'apis/problem';
 
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/BasicTitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
@@ -16,9 +16,10 @@ import ChapterForm from 'components/problems/ChapterForm';
 
 export interface PropTypes {
   id: string;
+  onToList: () => void;
 }
 
-function BasicDetail({ id }: PropTypes) {
+function BasicDetail({ id, onToList }: PropTypes) {
   const [activeSpinner] = useSpinner();
 
   const [chapterValues, setChapterValuse] = useState({ book: '', chapter: '', topic: '' });
@@ -90,6 +91,18 @@ function BasicDetail({ id }: PropTypes) {
     }
   }, [activeSpinner, titleValues, exampleValues, commentValue, isShuffle, id, chapterValues]);
 
+  const handleDelete = useCallback(async () => {
+    try {
+      activeSpinner(true);
+      await requestDelete(id);
+      onToList();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      activeSpinner(false);
+    }
+  }, []);
+
   useEffect(() => {
     handleUpdate();
   }, [handleUpdate]);
@@ -117,6 +130,9 @@ function BasicDetail({ id }: PropTypes) {
         <Input type='checkbox' id='shuffle' checked={isShuffle} onChange={handleShuffle} width='1rem' height='1rem' />
       </article>
       <article className='submit'>
+        <Button status='normal' width='5rem' margin='0 1rem 0 0' onClick={handleDelete}>
+          삭제
+        </Button>
         <Button status='active' width='5rem' onClick={handleSubmit}>
           제출
         </Button>

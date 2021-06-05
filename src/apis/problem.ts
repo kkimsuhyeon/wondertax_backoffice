@@ -128,3 +128,10 @@ export const requestProblemModify = async ({
     },
   });
 };
+
+export const requestDelete = async (id: string) => {
+  await instance({
+    url: `/problem/${id}`,
+    method: 'DELETE',
+  });
+};
