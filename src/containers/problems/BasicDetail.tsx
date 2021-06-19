@@ -20,7 +20,7 @@ export interface PropTypes {
 }
 
 function BasicDetail({ id, onToList }: PropTypes) {
-  const [activeSpinner] = useSpinner();
+  const activeSpinner = useSpinner();
 
   const [chapterValues, setChapterValuse] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });

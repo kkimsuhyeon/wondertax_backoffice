@@ -19,7 +19,7 @@ export interface PropTypes {
 }
 
 function BasicRegist({ onSubmit }: PropTypes) {
-  const [activeSpinner] = useSpinner();
+  const activeSpinner = useSpinner();
 
   const [chapterValues, setChapterValues] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });

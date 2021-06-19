@@ -1,36 +1,62 @@
+import { RootState } from 'modules';
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import styled, { keyframes, css } from 'styled-components';
+import { createPortal } from 'react-dom';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import styled, { keyframes } from 'styled-components';
 
-import OverlayLayout from 'components/Layout/OverlayLayout';
-
-import { activeSpinner } from 'store/spinner';
-
-const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(359deg);}
-`;
+const typedUseSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function Spinner() {
-  const isActive = useRecoilValue(activeSpinner);
+  const { isOpen } = typedUseSelector(({ spinner }) => spinner);
 
-  return (
-    <OverlayLayout isOpen={isActive} onClick={() => {}}>
+  return createPortal(
+    <Wrapper isOpen={isOpen}>
       <Spin />
-    </OverlayLayout>
+    </Wrapper>,
+    document.body
   );
 }
 
 export default Spinner;
 
+const Wrapper = styled.div<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+`;
+
+const spin = keyframes`
+0% {
+    transform: rotate(0deg);
+}
+25%{
+    transform: rotate(90deg);
+}
+50%{
+    transform:rotate(180deg);
+}
+75%{
+    transform:rotate(270deg);
+}
+100%{
+    transform:rotate(360deg);
+}
+`;
+
 const Spin = styled.div`
   width: 5rem;
   height: 5rem;
-  ${({ theme }) => css`
-    border: 0.2rem solid ${theme.white};
-    border-top: 0.2rem solid ${theme.lemon};
-  `}
+  border: 4px solid ${({ theme }) => theme.blackGray};
+  border-top: 4px solid ${({ theme }) => theme.white};
+  border-bottom: 4px solid ${({ theme }) => theme.white};
   border-radius: 50%;
-  animation: ${spin} 0.7s infinite linear;
-  translate: all 0.2s;
+  animation: ${spin} 1s linear infinite;
 `;

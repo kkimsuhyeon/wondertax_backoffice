@@ -9,7 +9,7 @@ export interface PropTypes {
 }
 
 function LoginFormContainer({ onSubmit }: PropTypes) {
-  const [activeSpinner] = useSpinner();
+  const activeSpinner = useSpinner();
 
   const handleSubmit = useCallback<FormPropTypes['onSubmit']>(
     ({ id, password }) => {

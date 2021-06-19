@@ -1,16 +1,19 @@
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { activeSpinner } from 'store/spinner';
+import { activeSpinner, inactiveSpinner } from 'modules/spinner';
 
-function useSpinner(status?: boolean) {
-  const [isActive, setActive] = useRecoilState(activeSpinner);
+function useSpinner() {
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    setActive(status ?? false);
-  }, [status, setActive]);
+  const setSpinner = useCallback(
+    (isOpen: boolean) => {
+      isOpen ? dispatch(activeSpinner()) : dispatch(inactiveSpinner());
+    },
+    [dispatch]
+  );
 
-  return [setActive, isActive] as const;
+  return setSpinner;
 }
 
 export default useSpinner;
