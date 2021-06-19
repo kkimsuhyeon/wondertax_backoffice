@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from 'components/Layout';
-import AuthRoute from 'components/common/AuthRoute';
 
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';

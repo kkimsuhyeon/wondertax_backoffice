@@ -1,18 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
+import useSpinner from 'hooks/useSpinner';
+
+import { requestProblemRegist } from 'apis/problem';
+
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
-import { Button } from 'components/atom/Button';
-
 import ChapterForm, { PropTypes as ChapterFormPropTypes } from 'components/problems/ChapterForm';
 import BasicTitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/BasicTitleForm';
 import BasicExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
 import BasicCommentForm, { PropTypes as CommentFormPropTypes } from 'components/problems/BasicCommentForm';
-
-import useSpinner from 'hooks/useSpinner';
-
-import { requestProblemRegist } from 'apis/problem';
+import BasicSubmitButtons from 'components/problems/BaiscSubmitButtons';
 
 export interface PropTypes {
   onSubmit: () => void;
@@ -103,9 +102,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         <Input type='checkbox' checked={isShuffle} onChange={handleShuffle} id='suffle' width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <Button status='active' onClick={handleSubmit} width='5rem'>
-          제출
-        </Button>
+        <BasicSubmitButtons onSubmit={handleSubmit} onFileUpload={() => {}} />
       </article>
     </Wrapper>
   );

@@ -8,19 +8,21 @@ interface ButtonType {
   margin?: CSSProperties['margin'];
   padding?: CSSProperties['padding'];
   weight?: CSSProperties['fontWeight'];
+  display?: CSSProperties['display'];
 }
 
 const CommonButton = styled.button.attrs<{ status: ButtonStatus }>(({ status, type = 'button' }) => ({
   type: type,
   disabled: status === 'disabled',
 }))<ButtonType>`
-  ${({ width, height, margin, padding, weight }) => css`
+  ${({ width, height, margin, padding, weight, display }) => css`
     border-radius: 0.36rem;
     width: ${width ?? '100%'};
     height: ${height ?? '2rem'};
     ${margin && `margin: ${margin}`};
     ${padding && `padding: ${padding}`};
     ${weight && `font-weight: ${weight}`};
+    display: ${display ?? 'inline-block'};
   `}
 `;
 

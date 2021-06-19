@@ -6,13 +6,13 @@ import useSpinner from 'hooks/useSpinner';
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
 
-import { requestProblemDetail, requestProblemModify, requestDelete } from 'apis/problem';
+import { requestProblemDetail, requestProblemModify, requestDelete, requestFileUpload } from 'apis/problem';
 
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/BasicTitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
 import CommentForm, { PropTypes as CommentFormPropTypes } from 'components/problems/BasicCommentForm';
-import { Button } from 'components/atom/Button';
 import ChapterForm from 'components/problems/ChapterForm';
+import BasicSubmitButtons from 'components/problems/BaiscSubmitButtons';
 
 export interface PropTypes {
   id: string;
@@ -52,6 +52,17 @@ function BasicDetail({ id, onToList }: PropTypes) {
     const { checked } = e.target;
     setShuffle(checked);
   }, []);
+
+  const handleFileUpload = useCallback(
+    async (data: FormData) => {
+      try {
+        await requestFileUpload({ id: id, file: data });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [id]
+  );
 
   const handleUpdate = useCallback(async () => {
     try {
@@ -130,12 +141,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
         <Input type='checkbox' id='shuffle' checked={isShuffle} onChange={handleShuffle} width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <Button status='normal' width='5rem' margin='0 1rem 0 0' onClick={handleDelete}>
-          삭제
-        </Button>
-        <Button status='active' width='5rem' onClick={handleSubmit}>
-          제출
-        </Button>
+        <BasicSubmitButtons onFileUpload={handleFileUpload} onSubmit={handleSubmit} onDelete={handleDelete} />
       </article>
     </Wrapper>
   );

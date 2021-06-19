@@ -1,9 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 
-function Regist() {}
+function Regist() {
+  return <Wrapper>test</Wrapper>;
+}
 
 export default Regist;
 
-// answerIdx에는 0 넣어야함
-// choices에 답이 들어감
-// type : 'B'
+const Wrapper = styled.div`
+  max-width: 80rem;
+  margin: 3rem auto 0;
+  width: 100%;
+`;

@@ -135,3 +135,11 @@ export const requestDelete = async (id: string) => {
     method: 'DELETE',
   });
 };
+
+export const requestFileUpload = async ({ id, file }: { id: string; file: FormData }) => {
+  await instance({
+    url: `/problem/${id}/image`,
+    method: 'POST',
+    data: file,
+  });
+};

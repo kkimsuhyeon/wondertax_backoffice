@@ -56,8 +56,8 @@ const TOPIC: MultiSelectorPropTypes['topics'] = [
   { name: '12. 연말정산', chapter: '4. 소득세법', value: '31' },
   { name: '13. 양도소득세', chapter: '4. 소득세법', value: '32' },
   { name: '14. 신고납부 및 결정과 징수', chapter: '4. 소득세법', value: '33' },
-  { name: '1. 부가가치세의 의의', chapter: '5. 부가가치세법', value: '34' },
-  { name: '2. 부가가치세의 계산구조', chapter: '5. 부가가치세법', value: '35' },
+  { name: '1. 부가가치세의 계산구조', chapter: '5. 부가가치세법', value: '34' },
+  { name: '2. 부가가치세의 의의', chapter: '5. 부가가치세법', value: '35' },
   { name: '3. 납부의무자', chapter: '5. 부가가치세법', value: '36' },
   { name: '4. 과세기간', chapter: '5. 부가가치세법', value: '37' },
   { name: '5. 납세지', chapter: '5. 부가가치세법', value: '38' },
@@ -154,7 +154,7 @@ const TOPIC: MultiSelectorPropTypes['topics'] = [
   { name: '5. 세금계산서합계표', chapter: '6. 세금계산서 실무', value: '129' },
 ];
 
-const TITLE: MultiSelectorPropTypes['titles'] = ['책', '챕터', '토픽', '유닛'];
+const TITLE: MultiSelectorPropTypes['titles'] = ['책', '챕터', '토픽'];
 
 export interface PropTypes {
   values: { book: string; chapter: string; topic: string };

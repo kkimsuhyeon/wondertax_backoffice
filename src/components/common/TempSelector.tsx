@@ -57,7 +57,11 @@ function MultiSelector({ books, chapters, onChanges, titles, topics, values }: P
 
   return (
     <Wrapper>
-      <TitleWrapper></TitleWrapper>
+      <TitleWrapper>
+        {titles.map((title) => (
+          <div key={title}>{title}</div>
+        ))}
+      </TitleWrapper>
       <SelectWrapper>
         <Section>
           {books.map(({ name, value }) => (

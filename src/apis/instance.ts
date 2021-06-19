@@ -11,6 +11,11 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
+    const retryRequest = new Promise((resolve, reject) => {
+      resolve(axios(error.config));
+    });
+    if (retryRequest) return retryRequest;
+
     return error;
   }
 );
