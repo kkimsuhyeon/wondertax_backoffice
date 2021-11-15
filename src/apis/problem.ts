@@ -1,4 +1,4 @@
-import instance from './instance';
+import instance, { createRequest } from './instance';
 
 export interface ProblemListItem {
   answerIdx: number;
@@ -13,16 +13,10 @@ export interface ProblemListItem {
   unit: Array<number>;
 }
 
-export const requestBasicList = async (): Promise<{
-  entities: Array<ProblemListItem>;
-}> => {
-  const { data } = await instance({
-    url: '/problem',
-    method: 'GET',
-  });
-
-  return data;
-};
+export const requestBasicList = () =>
+  createRequest<{
+    problems: Array<ProblemListItem>;
+  }>({ endpoint: '/problem', method: 'GET' });
 
 export const requestProblemDetail = async ({
   id,

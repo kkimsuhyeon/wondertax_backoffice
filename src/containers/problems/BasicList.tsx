@@ -18,8 +18,8 @@ function BasicList({ onClick }: PropTypes) {
   const handleRequestList = useCallback(async () => {
     try {
       activeSpinner(true);
-      const { entities } = await requestBasicList();
-      const temp: typeof list = entities.map((item) => {
+      const { problems } = await requestBasicList();
+      const temp: typeof list = problems.map((item) => {
         return {
           id: item.id,
           question: item.question,

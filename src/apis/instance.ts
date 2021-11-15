@@ -18,7 +18,7 @@ instance.interceptors.response.use(
 
 instance.interceptors.request.use(
   (config) => {
-    config.headers['bearer'] = localStorage.getItem('token') ?? undefined;
+    config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}` ?? undefined;
     return config;
   },
   (error) => {
