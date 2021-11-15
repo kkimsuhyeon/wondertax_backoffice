@@ -12,13 +12,14 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    return error;
+    return Promise.reject(error);
   }
 );
 
 instance.interceptors.request.use(
-  (request) => {
-    return request;
+  (config) => {
+    config.headers['bearer'] = localStorage.getItem('token') ?? undefined;
+    return config;
   },
   (error) => {
     return error;
@@ -53,7 +54,7 @@ export const createRequest = async <T = void>({
     });
     return data as T;
   } catch (e) {
-    console.log(e);
+    const test = e;
     throw e;
   }
 };

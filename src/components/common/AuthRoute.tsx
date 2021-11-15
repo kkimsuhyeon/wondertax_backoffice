@@ -8,7 +8,7 @@ export interface PropTypes extends RouteProps {
 }
 
 function RestrictRoute({ signin = undefined, redirect = '/', allow, ...rest }: PropTypes) {
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem('token');
   const { pathname = '/' } = rest.location ?? {};
   const redirecting = <Redirect to={{ pathname: redirect, state: { prev: pathname } }} />;
 
@@ -23,11 +23,11 @@ function RestrictRoute({ signin = undefined, redirect = '/', allow, ...rest }: P
 export default RestrictRoute;
 
 export function isSignin() {
-  return localStorage.getItem('accessToken') !== null;
+  return localStorage.getItem('token') !== null;
 }
 
 export function isNotSignin() {
-  return localStorage.getItem('accessToken') === null;
+  return localStorage.getItem('token') === null;
 }
 
 export function hasWindowOpener() {

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export interface PropTypes {
+export interface SignupLinkProps {
   onClick: () => void;
 }
 
-function SignUpLink({ onClick }: PropTypes) {
+function SignUpLink({ onClick }: SignupLinkProps) {
   return (
     <Text>
       {`Don't have an account?`}
