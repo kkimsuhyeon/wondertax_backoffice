@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 
 import useSpinner from 'hooks/useSpinner';
 
+import { requestSignin } from 'apis/auth';
+
 import Form, { PropTypes as FormPropTypes } from 'components/login/Form';
 
 export interface PropTypes {
@@ -12,16 +14,19 @@ function LoginFormContainer({ onSubmit }: PropTypes) {
   const activeSpinner = useSpinner();
 
   const handleSubmit = useCallback<FormPropTypes['onSubmit']>(
-    ({ id, password }) => {
-      activeSpinner(true);
-      console.log(id, password);
-      setTimeout(() => {
-        activeSpinner(false);
-        // api 호출
+    async ({ id, password }) => {
+      try {
+        activeSpinner(true);
+        const { jwtToken } = await requestSignin({ email: id, password: password });
+        console.log(jwtToken);
         onSubmit();
-      }, 2000);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        activeSpinner(false);
+      }
     },
-    [onSubmit, activeSpinner]
+    [activeSpinner, onSubmit]
   );
 
   return <Form onSubmit={handleSubmit} />;

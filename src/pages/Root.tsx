@@ -1,22 +1,24 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 
 import Layout from 'components/Layout';
+import AuthRoute, { isSignin, isNotSignin } from 'components/common/AuthRoute';
 
 import Problems from 'pages/problems/ProblemsRoute';
 import Home from 'pages/Home';
-import LogIn from 'pages/Login';
+import Signin from 'pages/Signin';
+import Signup from 'pages/Signup';
 
 function Root() {
   return (
     <Switch>
-      <Route exact path='/login' component={LogIn} />
-      <Route exact path='/signup' component={() => <>signup</>} />
+      <AuthRoute allow={isNotSignin} exact path='/signin' component={Signin} />
+      <AuthRoute allow={isNotSignin} exact path='/signup' component={Signup} />
       <Layout>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/problems' component={Problems} />
-          <Redirect to='/' />
+          <AuthRoute allow={isSignin} redirect='/signin' exact path='/' component={Home} />
+          <AuthRoute allow={isSignin} redirect='/signin' path='/problems' component={Problems} />
+          <Redirect to='/signin' />
         </Switch>
       </Layout>
     </Switch>

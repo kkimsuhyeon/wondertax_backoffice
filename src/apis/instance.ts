@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { createSearchParams } from 'utils';
 
-export const BASE_URL = 'https://api.wonderpass.tv/v1/admin';
+export const BASE_URL = 'https://api.wonderpass.tv/v1/admin/';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -11,11 +12,6 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    const retryRequest = new Promise((resolve, reject) => {
-      resolve(axios(error.config));
-    });
-    if (retryRequest) return retryRequest;
-
     return error;
   }
 );
@@ -51,11 +47,11 @@ export const createRequest = async <T = void>({
   try {
     const { data } = await instance({
       method,
-      url: `${endpoint}/${params}`,
+      url: `${endpoint}${createSearchParams(params)}`,
       data: body,
       headers,
     });
-    return data.data as T;
+    return data as T;
   } catch (e) {
     console.log(e);
     throw e;

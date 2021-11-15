@@ -1,12 +1,35 @@
 import React from 'react';
-import { Route, RouteProps } from 'react-router';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-export interface PropTypes {
-  isAllow: () => void;
+export interface PropTypes extends RouteProps {
+  signin?: boolean;
+  allow?: () => boolean;
+  redirect?: string;
 }
 
-function AuthRoute({ isAllow, ...others }: RouteProps & PropTypes) {
-  return <Route {...others} />;
+function RestrictRoute({ signin = undefined, redirect = '/', allow, ...rest }: PropTypes) {
+  const accessToken = localStorage.getItem('accessToken');
+  const { pathname = '/' } = rest.location ?? {};
+  const redirecting = <Redirect to={{ pathname: redirect, state: { prev: pathname } }} />;
+
+  if (signin === true && accessToken === null) return redirecting;
+  if (signin === false && accessToken !== null) return redirecting;
+
+  if (allow && allow() === false) return redirecting;
+
+  return <Route {...rest} />;
 }
 
-export default AuthRoute;
+export default RestrictRoute;
+
+export function isSignin() {
+  return localStorage.getItem('accessToken') !== null;
+}
+
+export function isNotSignin() {
+  return localStorage.getItem('accessToken') === null;
+}
+
+export function hasWindowOpener() {
+  return !!window.opener;
+}

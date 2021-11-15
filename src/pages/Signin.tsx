@@ -8,7 +8,7 @@ import SignUpLink from 'components/login/SignUpLink';
 
 import LoginForm from 'containers/LoginForm';
 
-function Login({ history }: RouteComponentProps) {
+function Signin({ history }: RouteComponentProps) {
   const handleLinkClick = useCallback(() => {
     history.push('/signup');
   }, [history]);
@@ -29,7 +29,7 @@ function Login({ history }: RouteComponentProps) {
   );
 }
 
-export default Login;
+export default Signin;
 
 const Wrapper = styled.div`
   max-width: 30rem;
