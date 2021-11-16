@@ -62,7 +62,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         question: title,
         unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
         choices: [exampleValues['0'], exampleValues['1'], exampleValues['2']],
-        comment: commentValue,
+        commentary: commentValue,
         type: 'A',
         authorId: 1,
       });

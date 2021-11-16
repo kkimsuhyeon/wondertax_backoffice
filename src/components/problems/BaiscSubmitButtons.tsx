@@ -14,10 +14,6 @@ function FileUploadButton({ onFileUpload, onSubmit, onDelete }: PropTypes) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newFileList = Array.from(e.target.files as FileList);
 
-      newFileList.forEach((file) => {
-        if (file.size / (1024 * 1024) > 1) return;
-      });
-
       const data = new FormData();
       newFileList.forEach((item) => data.append(`images`, item));
       onFileUpload(data);

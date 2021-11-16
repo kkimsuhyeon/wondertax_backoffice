@@ -29,7 +29,7 @@ instance.interceptors.request.use(
 export interface CreateRequestArguments {
   endpoint: AxiosRequestConfig['url'];
   method: AxiosRequestConfig['method'];
-  body?: { [key: string]: string | number | Blob | Array<string> | null };
+  body?: { [key: string]: string | number | Blob | Array<string> | null | boolean | FormData };
   params?: { [key: string]: string | number | Array<string> | undefined };
   headers?: AxiosRequestConfig['headers'];
 }

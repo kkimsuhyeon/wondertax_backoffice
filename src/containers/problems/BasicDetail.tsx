@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import useSpinner from 'hooks/useSpinner';
@@ -6,7 +6,7 @@ import useSpinner from 'hooks/useSpinner';
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
 
-import { requestProblemDetail, requestProblemModify, requestDelete, requestFileUpload } from 'apis/problem';
+import { requestProblemDetail, requestProblemModify, requestDelete, requestImageUpload } from 'apis/problem';
 
 import TitleForm, { PropTypes as TitleFormPropTypes } from 'components/problems/BasicTitleForm';
 import ExampleForm, { PropTypes as ExampleFormPropTypes } from 'components/problems/BasicExampleForm';
@@ -21,6 +21,8 @@ export interface PropTypes {
 
 function BasicDetail({ id, onToList }: PropTypes) {
   const activeSpinner = useSpinner();
+
+  const imageRef = useRef<Array<string>>([]);
 
   const [chapterValues, setChapterValuse] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
@@ -56,7 +58,8 @@ function BasicDetail({ id, onToList }: PropTypes) {
   const handleFileUpload = useCallback(
     async (data: FormData) => {
       try {
-        await requestFileUpload({ id: id, file: data });
+        const { imageIds } = await requestImageUpload({ id: id, image: data });
+        imageIds.forEach((image) => imageRef.current.push(image));
       } catch (e) {
         console.log(e);
       }
@@ -67,12 +70,13 @@ function BasicDetail({ id, onToList }: PropTypes) {
   const handleUpdate = useCallback(async () => {
     try {
       activeSpinner(true);
-      const { entityData } = await requestProblemDetail({ id: id });
-      setChapterValuse({ book: String(entityData.unit[0]), chapter: String(entityData.unit[1]), topic: String(entityData.unit[2]) });
-      setTitleValues({ answer: String(entityData.answerIdx), difficult: entityData.difficulty, title: entityData.question });
-      setExampleValues({ '0': entityData.choices[0], '1': entityData.choices[1], '2': entityData.choices[2], '3': entityData.choices[3] });
-      setCommentValue(entityData.commentary);
-      setShuffle(entityData.shuffle);
+      const result = await requestProblemDetail(id);
+      setChapterValuse({ book: String(result.unit[0]), chapter: String(result.unit[1]), topic: String(result.unit[2]) });
+      setTitleValues({ answer: String(result.answerIdx), difficult: result.difficulty, title: result.question });
+      setExampleValues({ '0': result.choices[0], '1': result.choices[1], '2': result.choices[2], '3': result.choices[3] });
+      setCommentValue(result.commentary);
+      setShuffle(result.shuffle);
+      imageRef.current = result.imageIds;
     } catch (e) {
       console.log(e);
     } finally {
@@ -85,15 +89,18 @@ function BasicDetail({ id, onToList }: PropTypes) {
       activeSpinner(true);
       await requestProblemModify({
         id: id,
-        answerIdx: +titleValues.answer,
-        authorId: 1,
-        choices: [exampleValues[0], exampleValues[1], exampleValues[2], exampleValues[3]],
-        comment: commentValue,
-        difficulty: titleValues.difficult,
-        question: titleValues.title,
-        shuffle: isShuffle,
-        type: 'A',
-        unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
+        params: {
+          answerIdx: +titleValues.answer,
+          authorId: 1,
+          choices: [exampleValues[0], exampleValues[1], exampleValues[2], exampleValues[3]],
+          commentary: commentValue,
+          difficulty: titleValues.difficult,
+          question: titleValues.title,
+          shuffle: isShuffle,
+          type: 'A',
+          unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
+          imageIds: imageRef.current,
+        },
       });
     } catch (e) {
       console.log(e);

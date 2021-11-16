@@ -1,139 +1,45 @@
 import instance, { createRequest } from './instance';
 
-export interface ProblemListItem {
-  answerIdx: number;
-  authorId: string | null;
-  choices: Array<string>;
-  createdOn: string;
-  difficulty: string;
+export interface Problem {
   id: string;
-  question: string;
-  shuffle: boolean;
   type: string;
   unit: Array<number>;
+  difficulty: string;
+  authorId: string | null;
+  question: string;
+  choices: Array<string>;
+  answerIdx: number;
+  commentary: string;
+  imageIds: Array<string>;
+  shuffle: boolean;
+  createdOn: string;
 }
 
-export const requestBasicList = () =>
-  createRequest<{
-    problems: Array<ProblemListItem>;
-  }>({ endpoint: '/problem', method: 'GET' });
+interface Params {
+  type: string;
+  unit: Array<string>;
+  difficulty: string;
+  authorId: number;
+  question: string;
+  choices: Array<string>;
+  answerIdx: number;
+  commentary?: string;
+  imageIds?: Array<string>;
+  shuffle?: boolean;
+}
 
-export const requestProblemDetail = async ({
-  id,
-}: {
-  id: string;
-}): Promise<{
-  entityData: {
-    answerIdx: number;
-    authorId: number;
-    choices: Array<string>;
-    commentary: string;
-    createdOn: string;
-    difficulty: string;
-    question: string;
-    shuffle: boolean;
-    type: string;
-    unit: Array<number>;
-  };
-  entityKey: {
-    id: string;
-    kind: string;
-    path: Array<string>;
-  };
-}> => {
-  const { data } = await instance({ url: `/problem/${id}`, method: 'GET' });
+export const requestBasicList = () => createRequest<{ problems: Array<Problem> }>({ endpoint: '/problem', method: 'GET' });
+
+export const requestProblemDetail = (id: string) => createRequest<Problem>({ method: 'GET', endpoint: `/problem/${id}` });
+
+export const requestProblemRegist = (params: Params) => createRequest({ method: 'POST', endpoint: '/problem', body: { ...params } });
+
+export const requestProblemModify = ({ id, params }: { id: string; params: Partial<Params> }) =>
+  createRequest({ method: 'POST', endpoint: `/problem/${id}`, body: { ...params } });
+
+export const requestDelete = (id: string) => createRequest({ method: 'DELETE', endpoint: `/problem/${id}` });
+
+export const requestImageUpload = async ({ id, image }: { id: string; image: FormData }): Promise<{ imageIds: Array<string> }> => {
+  const { data } = await instance({ method: 'POST', url: `/problem/${id}/image`, data: image });
   return data;
-};
-
-export const requestProblemRegist = async ({
-  difficulty,
-  question,
-  choices,
-  answerIdx,
-  shuffle,
-  type,
-  unit,
-  comment,
-  authorId = 1,
-}: {
-  question: string;
-  difficulty: string;
-  answerIdx: number;
-  choices: Array<string>;
-  shuffle: boolean;
-  type: string;
-  unit: Array<string>;
-  comment: string;
-  authorId: number;
-}) => {
-  await instance({
-    url: '/problem',
-    method: 'POST',
-    data: {
-      difficulty: difficulty,
-      answerIdx: answerIdx,
-      choices: choices,
-      question: question,
-      type: type,
-      unit: unit,
-      shuffle: shuffle,
-      commentary: comment,
-      authorId: authorId,
-    },
-  });
-};
-
-export const requestProblemModify = async ({
-  id,
-  difficulty,
-  question,
-  choices,
-  answerIdx,
-  shuffle,
-  type,
-  unit,
-  comment,
-  authorId = 1,
-}: {
-  id: string;
-  question: string;
-  difficulty: string;
-  answerIdx: number;
-  choices: Array<string>;
-  shuffle: boolean;
-  type: string;
-  unit: Array<string>;
-  comment: string;
-  authorId: number;
-}) => {
-  await instance({
-    url: `/problem/${id}`,
-    method: 'POST',
-    data: {
-      difficulty: difficulty,
-      answerIdx: answerIdx,
-      choices: choices,
-      question: question,
-      type: type,
-      unit: unit,
-      shuffle: shuffle,
-      commentary: comment,
-      authorId: authorId,
-    },
-  });
-};
-
-export const requestDelete = async (id: string) => {
-  await instance({
-    url: `/problem/${id}`,
-    method: 'DELETE',
-  });
-};
-
-export const requestFileUpload = async ({ id, file }: { id: string; file: FormData }) => {
-  await instance({
-    url: `/problem/${id}/image`,
-    method: 'POST',
-    data: file,
-  });
 };
