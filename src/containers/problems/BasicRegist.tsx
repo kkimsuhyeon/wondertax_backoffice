@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 import useSpinner from 'hooks/useSpinner';
 
-import { requestImageUpload, requestProblemRegist } from 'apis/problem';
+import { requestImageUpload, requestProblemRegist, requestProblemModify } from 'apis/problem';
 
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
@@ -19,6 +19,9 @@ export interface PropTypes {
 
 function BasicRegist({ onSubmit }: PropTypes) {
   const activeSpinner = useSpinner();
+
+  const imageRef = useRef<FormData | null>(null);
+  const imageIdRef = useRef();
 
   const [chapterValues, setChapterValues] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
@@ -52,19 +55,14 @@ function BasicRegist({ onSubmit }: PropTypes) {
   }, []);
 
   const handleFileUpload = useCallback(async (data: FormData) => {
-    //   try {
-    //     const { imageIds } = await requestImageUpload({ id: id, image: data });
-    //     imageIds.forEach((image) => imageRef.current.push(image));
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
+    imageRef.current = data;
   }, []);
 
   const handleSubmit = useCallback(async () => {
     const { answer, difficult, title } = titleValues;
     try {
       activeSpinner(true);
-      await requestProblemRegist({
+      const { id } = await requestProblemRegist({
         shuffle: isShuffle,
         answerIdx: +answer,
         difficulty: difficult,
@@ -75,6 +73,9 @@ function BasicRegist({ onSubmit }: PropTypes) {
         type: 'A',
         authorId: 1,
       });
+      const { imageIds } = await requestImageUpload({ id: id, image: imageRef.current as FormData });
+      await requestProblemModify({ id: id, params: { imageIds: imageIds } });
+
       setTitleValues({ title: '', difficult: '', answer: '' });
       setCommentValue('');
       setExampleValues({ '0': '', '1': '', '2': '', '3': '' });
@@ -111,7 +112,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         <Input type='checkbox' checked={isShuffle} onChange={handleShuffle} id='suffle' width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <BasicSubmitButtons onSubmit={handleSubmit} />
+        <BasicSubmitButtons onSubmit={handleSubmit} onFileUpload={handleFileUpload} />
       </article>
     </Wrapper>
   );

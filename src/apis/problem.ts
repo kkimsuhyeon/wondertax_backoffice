@@ -32,7 +32,8 @@ export const requestBasicList = () => createRequest<{ problems: Array<Problem> }
 
 export const requestProblemDetail = (id: string) => createRequest<Problem>({ method: 'GET', endpoint: `/problem/${id}` });
 
-export const requestProblemRegist = (params: Params) => createRequest({ method: 'POST', endpoint: '/problem', body: { ...params } });
+export const requestProblemRegist = (params: Params) =>
+  createRequest<{ id: string }>({ method: 'POST', endpoint: '/problem', body: { ...params } });
 
 export const requestProblemModify = ({ id, params }: { id: string; params: Partial<Params> }) =>
   createRequest({ method: 'POST', endpoint: `/problem/${id}`, body: { ...params } });
