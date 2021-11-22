@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import useSpinner from 'hooks/useSpinner';
 
-import { requestProblemRegist } from 'apis/problem';
+import { requestImageUpload, requestProblemRegist } from 'apis/problem';
 
 import { Text } from 'components/atom/Box';
 import { Input } from 'components/atom/Input';
@@ -49,6 +49,15 @@ function BasicRegist({ onSubmit }: PropTypes) {
   const handleShuffle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setShuffle(checked);
+  }, []);
+
+  const handleFileUpload = useCallback(async (data: FormData) => {
+    //   try {
+    //     const { imageIds } = await requestImageUpload({ id: id, image: data });
+    //     imageIds.forEach((image) => imageRef.current.push(image));
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
   }, []);
 
   const handleSubmit = useCallback(async () => {
@@ -102,7 +111,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
         <Input type='checkbox' checked={isShuffle} onChange={handleShuffle} id='suffle' width='1rem' height='1rem' />
       </article>
       <article className='submit'>
-        <BasicSubmitButtons onSubmit={handleSubmit} onFileUpload={() => {}} />
+        <BasicSubmitButtons onSubmit={handleSubmit} onFileUpload={handleFileUpload} />
       </article>
     </Wrapper>
   );

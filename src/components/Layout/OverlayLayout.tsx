@@ -1,9 +1,22 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
 function OverlayLayout({ children, isOpen, onClick }: PropsWithChildren<{ isOpen: boolean; onClick: () => void }>) {
   const root = document.body;
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClick = useCallback(
+    (e: React.SyntheticEvent) => {
+      console.log(wrapperRef.current);
+      console.log(e.currentTarget);
+      e.stopPropagation();
+      e.preventDefault();
+      onClick();
+    },
+    [onClick]
+  );
 
   useEffect(() => {
     if (isOpen) root.style.overflow = 'hidden';
@@ -11,7 +24,12 @@ function OverlayLayout({ children, isOpen, onClick }: PropsWithChildren<{ isOpen
   }, [isOpen, root]);
 
   if (!isOpen) return null;
-  return createPortal(<Wrapper onClick={onClick}>{children}</Wrapper>, root);
+  return createPortal(
+    <Wrapper onClick={handleClick} ref={wrapperRef}>
+      {children}
+    </Wrapper>,
+    root
+  );
 }
 
 export default OverlayLayout;

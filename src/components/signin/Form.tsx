@@ -23,11 +23,11 @@ function Form({ onSubmit }: FormProps) {
     <Wrapper onSubmit={handleSubmit}>
       <div>
         <label>아이디</label>
-        <input value={id} onChange={setId} />
+        <input placeholder='아이디' value={id} onChange={setId} />
       </div>
       <div>
         <label>패스워드</label>
-        <input value={password} onChange={setPassword} />
+        <input type='password' placeholder='패스워드' value={password} onChange={setPassword} />
       </div>
       <button type='submit'>로그인</button>
     </Wrapper>

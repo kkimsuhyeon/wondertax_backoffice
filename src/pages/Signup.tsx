@@ -22,6 +22,7 @@ function Signup({ history }: RouteComponentProps) {
         activeSpinner(true);
         await requestSignup({ name, email, password });
         history.push('/signin');
+        activeDialog({ isOpen: true, title: '회원가입 완료' });
       } catch (e: any) {
         activeDialog({ isOpen: true, title: e.message as string });
         // throw e;
@@ -31,6 +32,10 @@ function Signup({ history }: RouteComponentProps) {
     },
     [activeSpinner, name, email, password, history, activeDialog]
   );
+
+  const clickSignin = useCallback(() => {
+    history.push('/signin');
+  }, [history]);
 
   return (
     <Wrapper>
@@ -45,9 +50,10 @@ function Signup({ history }: RouteComponentProps) {
         </div>
         <div>
           <label htmlFor='password'>패스워드</label>
-          <input id='password' value={password} onChange={setPassword} />
+          <input type='password' id='password' value={password} onChange={setPassword} />
         </div>
         <button type='submit'>제출</button>
+        <Link onClick={clickSignin}>로그인</Link>
       </Form>
     </Wrapper>
   );
@@ -85,4 +91,13 @@ const Form = styled.form`
     background-color: white;
     padding: 0.5rem;
   }
+`;
+
+const Link = styled.p`
+  margin-top: 1rem;
+  color: blue;
+  text-align: right;
+  text-decoration: underline;
+  text-underline-position: under;
+  cursor: pointer;
 `;

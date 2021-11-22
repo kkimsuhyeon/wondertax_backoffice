@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import PeopleIcon from '@material-ui/icons/People';
@@ -8,12 +9,22 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import useDialog from 'hooks/useDialog';
 
 export interface PropTypes {
   isOpen: boolean;
 }
 
 function SideNav({ isOpen }: PropTypes) {
+  const history = useHistory();
+  const activeDialog = useDialog();
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem('token');
+    history.push('/signin');
+    activeDialog({ isOpen: true, title: '정상적 로그아웃' });
+  }, [history, activeDialog]);
+
   return (
     <Wrapper isOpen={isOpen}>
       <Menu exact to='/'>
@@ -36,7 +47,7 @@ function SideNav({ isOpen }: PropTypes) {
         <SettingsIcon />
         Setting
       </Menu>
-      <Menu exact to='/logout'>
+      <Menu exact to='/logout' onClick={handleLogout}>
         <ExitToAppIcon />
         Logout
       </Menu>

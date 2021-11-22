@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+
 import { RootState } from 'modules';
 import useDialog from 'hooks/useDialog';
-import { createPortal } from 'react-dom';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -12,12 +13,42 @@ function Dialog() {
 
   const activeDialog = useDialog();
 
-  const closeDialog = useCallback(() => {
-    activeDialog({ isOpen: false });
-  }, [activeDialog]);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const mouseDownedTarget = useRef<HTMLElement>();
+
+  const closeDialog = useCallback(
+    (e: React.MouseEvent | React.KeyboardEvent) => {
+      e.stopPropagation();
+      activeDialog({ isOpen: false });
+    },
+    [activeDialog]
+  );
+
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    mouseDownedTarget.current = e.target as HTMLElement;
+  }, []);
+
+  const onMouseUp = useCallback(
+    (e: React.MouseEvent) => {
+      if ((e.target as HTMLElement) === overlayRef.current && mouseDownedTarget.current === overlayRef.current) closeDialog(e);
+      mouseDownedTarget.current = undefined;
+    },
+    [closeDialog]
+  );
+
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Escape') closeDialog(e);
+    },
+    [closeDialog]
+  );
+
+  useEffect(() => {
+    overlayRef.current?.focus();
+  }, [isOpen]);
 
   return createPortal(
-    <OutLayout isOpen={isOpen} onClick={closeDialog}>
+    <OutLayout ref={overlayRef} tabIndex={0} isOpen={isOpen} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onKeyDown={onKeyDown}>
       <Wrapper>{title}</Wrapper>
     </OutLayout>,
     document.body

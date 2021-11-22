@@ -25,7 +25,7 @@ function SigninContainer({ onClickSignin, onClickSignup }: SigninContainerProps)
       localStorage.setItem('token', jwtToken);
       onClickSignin();
     } catch (e: any) {
-      activeDialog({ isOpen: true, title: e.message });
+      activeDialog({ isOpen: true, title: '아이디,비밀번호 확인 해주세요.' });
       throw e;
     } finally {
       activeSpinner(false);

@@ -29,7 +29,3 @@ export function isSignin() {
 export function isNotSignin() {
   return localStorage.getItem('token') === null;
 }
-
-export function hasWindowOpener() {
-  return !!window.opener;
-}
