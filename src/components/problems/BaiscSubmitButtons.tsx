@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from 'components/atom/Button';
 
 export interface PropTypes {
-  onFileUpload: (data: FormData) => void;
+  onFileUpload?: (data: FormData) => void;
   onSubmit: () => void;
   onDelete?: () => void;
 }
@@ -16,7 +16,7 @@ function FileUploadButton({ onFileUpload, onSubmit, onDelete }: PropTypes) {
 
       const data = new FormData();
       newFileList.forEach((item) => data.append(`images`, item));
-      onFileUpload(data);
+      onFileUpload && onFileUpload(data);
       e.target.value = '';
     },
     [onFileUpload]
@@ -24,10 +24,12 @@ function FileUploadButton({ onFileUpload, onSubmit, onDelete }: PropTypes) {
 
   return (
     <>
-      <Label>
-        <input type='file' accept='.png, .jpg, .jpeg' multiple onChange={handleFileUpload} />
-        파일 업로드
-      </Label>
+      {onFileUpload && (
+        <Label>
+          <input type='file' accept='.png, .jpg, .jpeg' multiple onChange={handleFileUpload} />
+          파일 업로드
+        </Label>
+      )}
       {onDelete && (
         <Button status='normal' width='5rem' margin='0 1rem 0 0' onClick={onDelete}>
           삭제
