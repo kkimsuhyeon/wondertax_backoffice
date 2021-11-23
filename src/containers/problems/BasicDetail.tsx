@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useSpinner from 'hooks/useSpinner';
@@ -22,13 +22,12 @@ export interface PropTypes {
 function BasicDetail({ id, onToList }: PropTypes) {
   const activeSpinner = useSpinner();
 
-  const imageRef = useRef<Array<string>>([]);
-
   const [chapterValues, setChapterValuse] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
   const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ '0': '', '1': '', '2': '', '3': '' });
   const [commentValue, setCommentValue] = useState<CommentFormPropTypes['value']>('');
   const [isShuffle, setShuffle] = useState<boolean>(true);
+  const [imageId, setImageId] = useState<Array<string>>([]);
 
   const handleChapterChanges = useCallback((args: any) => {
     setChapterValuse((prev) => ({ ...prev, ...args }));
@@ -59,7 +58,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
     async (data: FormData) => {
       try {
         const { imageIds } = await requestImageUpload({ id: id, image: data });
-        imageIds.forEach((image) => imageRef.current.push(image));
+        setImageId((prev) => [...prev, ...imageIds]);
       } catch (e) {
         console.log(e);
       }
@@ -76,7 +75,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
       setExampleValues({ '0': result.choices[0], '1': result.choices[1], '2': result.choices[2], '3': result.choices[3] });
       setCommentValue(result.commentary);
       setShuffle(result.shuffle);
-      imageRef.current = result.imageIds;
+      setImageId(result.imageIds);
     } catch (e) {
       console.log(e);
     } finally {
@@ -99,7 +98,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
           shuffle: isShuffle,
           type: 'A',
           unit: [chapterValues.book, chapterValues.chapter, chapterValues.topic],
-          imageIds: imageRef.current,
+          imageIds: imageId,
         },
       });
     } catch (e) {
@@ -107,7 +106,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
     } finally {
       activeSpinner(false);
     }
-  }, [activeSpinner, titleValues, exampleValues, commentValue, isShuffle, id, chapterValues]);
+  }, [activeSpinner, titleValues, imageId, exampleValues, commentValue, isShuffle, id, chapterValues]);
 
   const handleDelete = useCallback(async () => {
     try {
@@ -119,7 +118,40 @@ function BasicDetail({ id, onToList }: PropTypes) {
     } finally {
       activeSpinner(false);
     }
-  }, []);
+  }, [activeSpinner, onToList, id]);
+
+  const createImageList = useMemo(() => {
+    return imageId.map((image) => (
+      <div key={image}>
+        <img
+          id={image}
+          src={`https://storage.googleapis.com/images-wondertax/problems/${id}/${image}.jpg`}
+          onError={async () => {
+            activeSpinner(true);
+            const test = document.getElementById(image) as HTMLImageElement;
+            setTimeout(() => {
+              test.src = `https://storage.googleapis.com/images-wondertax/problems/${id}/${image}.jpg`;
+              activeSpinner(false);
+            }, 300);
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(`https://storage.googleapis.com/images-wondertax/problems/${id}/${image}.jpg`);
+          }}
+        />
+        <span
+          onClick={(e: React.MouseEvent) => {
+            e.stopPropagation();
+            setImageId((prev) => {
+              return prev.filter((id) => id !== image);
+            });
+          }}
+        >
+          x
+        </span>
+      </div>
+    ));
+  }, [imageId, id]);
 
   useEffect(() => {
     handleUpdate();
@@ -150,6 +182,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
       <article className='submit'>
         <BasicSubmitButtons onFileUpload={handleFileUpload} onSubmit={handleSubmit} onDelete={handleDelete} />
       </article>
+      <article className='image'>{createImageList}</article>
     </Wrapper>
   );
 }
@@ -167,6 +200,29 @@ const Wrapper = styled.div`
 
     &.submit {
       text-align: right;
+    }
+
+    &.image {
+      display: flex;
+      & > div {
+        width: fit-content;
+        height: fit-content;
+        position: relative;
+        margin-right: 0.5rem;
+        cursor: zoom-in;
+
+        & > img {
+          width: 7rem;
+          height: 7rem;
+        }
+
+        & > span {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;

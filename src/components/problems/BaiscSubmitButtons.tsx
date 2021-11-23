@@ -26,7 +26,7 @@ function FileUploadButton({ onFileUpload, onSubmit, onDelete }: PropTypes) {
     <>
       {onFileUpload && (
         <Label>
-          <input type='file' accept='.png, .jpg, .jpeg' multiple onChange={handleFileUpload} />
+          <input type='file' accept=' .jpg' multiple onChange={handleFileUpload} />
           파일 업로드
         </Label>
       )}
