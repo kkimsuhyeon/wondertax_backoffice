@@ -55,8 +55,10 @@ function BasicDetail({ id, onToList }: PropTypes) {
   }, []);
 
   const handleFileUpload = useCallback(
-    async (data: FormData) => {
+    async (files: Array<File>) => {
       try {
+        const data = new FormData();
+        files.forEach((file) => data.append(`images`, file));
         const { imageIds } = await requestImageUpload({ id: id, image: data });
         setImageId((prev) => [...prev, ...imageIds]);
       } catch (e) {
@@ -151,7 +153,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
         </span>
       </div>
     ));
-  }, [imageId, id]);
+  }, [imageId, id, activeSpinner]);
 
   useEffect(() => {
     handleUpdate();

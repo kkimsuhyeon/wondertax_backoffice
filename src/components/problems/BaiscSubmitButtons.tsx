@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from 'components/atom/Button';
 
 export interface PropTypes {
-  onFileUpload?: (data: FormData) => void;
+  onFileUpload?: (fileList: Array<File>) => void;
   onSubmit: () => void;
   onDelete?: () => void;
 }
@@ -13,10 +13,7 @@ function FileUploadButton({ onFileUpload, onSubmit, onDelete }: PropTypes) {
   const handleFileUpload = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newFileList = Array.from(e.target.files as FileList);
-
-      const data = new FormData();
-      newFileList.forEach((item) => data.append(`images`, item));
-      onFileUpload && onFileUpload(data);
+      onFileUpload && onFileUpload(newFileList);
       e.target.value = '';
     },
     [onFileUpload]

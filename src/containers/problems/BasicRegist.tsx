@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useSpinner from 'hooks/useSpinner';
@@ -21,8 +21,8 @@ function BasicRegist({ onSubmit }: PropTypes) {
   const activeSpinner = useSpinner();
 
   const imageRef = useRef<FormData | null>(null);
-  const imageIdRef = useRef();
 
+  const [imageInfo, setImageInfo] = useState<Array<{ name: string; url: string }>>([]);
   const [chapterValues, setChapterValues] = useState({ book: '', chapter: '', topic: '' });
   const [titleValues, setTitleValues] = useState<TitleFormPropTypes['values']>({ answer: '', difficult: '', title: '' });
   const [exampleValues, setExampleValues] = useState<ExampleFormPropTypes['values']>({ 0: '', 1: '', 2: '', 3: '' });
@@ -54,7 +54,14 @@ function BasicRegist({ onSubmit }: PropTypes) {
     setShuffle(checked);
   }, []);
 
-  const handleFileUpload = useCallback(async (data: FormData) => {
+  const handleFileUpload = useCallback(async (files: Array<File>) => {
+    const data = new FormData();
+    files.forEach((file) => {
+      const url = URL.createObjectURL(file);
+      setImageInfo((prev) => [...prev, { name: file.name, url: url }]);
+      data.append(`images`, file);
+    });
+    console.log(data.getAll('images'));
     imageRef.current = data;
   }, []);
 
@@ -89,6 +96,34 @@ function BasicRegist({ onSubmit }: PropTypes) {
     }
   }, [isShuffle, titleValues, activeSpinner, chapterValues, exampleValues, commentValue, onSubmit]);
 
+  const createImageList = useMemo(() => {
+    return imageInfo.map(({ name, url }) => (
+      <div key={url}>
+        <img
+          src={url}
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(url);
+          }}
+        />
+        <span
+          onClick={(e) => {
+            const data = new FormData();
+
+            e.stopPropagation();
+            setImageInfo(imageInfo.filter((info) => info.name !== name));
+
+            const temp = imageRef.current?.getAll('images');
+            temp?.filter((file) => (file as File).name !== name).forEach((file) => data.append('images', file));
+            imageRef.current = data;
+          }}
+        >
+          x
+        </span>
+      </div>
+    ));
+  }, [imageInfo]);
+
   return (
     <Wrapper>
       <article>
@@ -114,6 +149,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
       <article className='submit'>
         <BasicSubmitButtons onSubmit={handleSubmit} onFileUpload={handleFileUpload} />
       </article>
+      <article className='image'>{createImageList}</article>
     </Wrapper>
   );
 }
@@ -131,6 +167,29 @@ const Wrapper = styled.div`
 
     &.submit {
       text-align: right;
+    }
+
+    &.image {
+      display: flex;
+      & > div {
+        width: fit-content;
+        height: fit-content;
+        position: relative;
+        margin-right: 0.5rem;
+        cursor: zoom-in;
+
+        & > img {
+          width: 7rem;
+          height: 7rem;
+        }
+
+        & > span {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;
