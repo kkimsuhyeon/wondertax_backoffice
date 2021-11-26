@@ -80,8 +80,10 @@ function BasicRegist({ onSubmit }: PropTypes) {
         type: 'A',
         authorId: 1,
       });
-      const { imageIds } = await requestImageUpload({ id: id, image: imageRef.current as FormData });
-      await requestProblemModify({ id: id, params: { imageIds: imageIds } });
+      if (imageRef.current !== null) {
+        const { imageIds } = await requestImageUpload({ id: id, image: imageRef.current as FormData });
+        await requestProblemModify({ id: id, params: { imageIds: imageIds } });
+      }
 
       setTitleValues({ title: '', difficult: '', answer: '' });
       setCommentValue('');
