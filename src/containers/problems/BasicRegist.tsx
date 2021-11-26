@@ -97,6 +97,7 @@ function BasicRegist({ onSubmit }: PropTypes) {
   }, [isShuffle, titleValues, activeSpinner, chapterValues, exampleValues, commentValue, onSubmit]);
 
   const createImageList = useMemo(() => {
+    if (imageInfo === null || imageInfo.length === 0) return null;
     return imageInfo.map(({ name, url }) => (
       <div key={url}>
         <img

@@ -123,6 +123,7 @@ function BasicDetail({ id, onToList }: PropTypes) {
   }, [activeSpinner, onToList, id]);
 
   const createImageList = useMemo(() => {
+    if (imageId === null || imageId.length === 0) return null;
     return imageId.map((image) => (
       <div key={image}>
         <img
