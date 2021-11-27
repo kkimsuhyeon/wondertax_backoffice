@@ -44,7 +44,16 @@ function BasicTitleForm({ onChanges, values }: PropTypes) {
     <Wrapper>
       <Div flex='3'>
         <Text margin='0 0 0.5rem 0'>문제</Text>
-        <Input value={title} onChange={handleTitleChange} />
+        <Input
+          value={title}
+          onChange={handleTitleChange}
+          onKeyDown={(e) => {
+            e.stopPropagation();
+            if (e.ctrlKey && e.code === 'KeyI') {
+              onChanges({ title: title + '<image>' });
+            }
+          }}
+        />
       </Div>
       <Div flex='1'>
         <Text margin='0 0 0.5rem 0'>난이도</Text>

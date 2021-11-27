@@ -15,7 +15,18 @@ function BasicCommentForm({ value, onChange }: PropTypes) {
     [onChange]
   );
 
-  return <StyleTextarea value={value} onChange={handleChange} />;
+  return (
+    <StyleTextarea
+      value={value}
+      onChange={handleChange}
+      onKeyDown={(e) => {
+        e.stopPropagation();
+        if (e.ctrlKey && e.code === 'KeyI') {
+          onChange(value + '<image>');
+        }
+      }}
+    />
+  );
 }
 
 export default BasicCommentForm;
